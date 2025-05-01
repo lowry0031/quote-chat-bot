@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaning Service Quote Bot - Demo</title>
+    <link rel="stylesheet" href="src/css/chatbot.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        header {
+            background-color: #4a90e2;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .content {
+            padding: 1rem;
+        }
+        
+        .sidebar {
+            padding: 1rem;
+        }
+        
+        h1, h2, h3 {
+            color: #4a90e2;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #4a90e2;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+        
+        footer {
+            background-color: #f5f5f5;
+            padding: 1rem 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        code {
+            background-color: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        pre {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cleaning Service Quote Bot</h1>
+        <p>Get instant quotes for professional cleaning services</p>
+    </header>
+    
+    <main>
+        <div class="container">
+            <div class="content">
+                <h2>Professional Cleaning Services</h2>
+                <p>Welcome to our cleaning service website. We provide professional cleaning services for homes and offices. Our team of experienced cleaners is dedicated to providing high-quality service at competitive prices.</p>
+                
+                <h3>Our Services</h3>
+                <ul>
+                    <li><strong>Regular Cleaning</strong> - Weekly, bi-weekly, or monthly cleaning to keep your home spotless.</li>
+                    <li><strong>Deep Cleaning</strong> - A thorough cleaning for homes that need extra attention.</li>
+                    <li><strong>Move-in/Move-out Cleaning</strong> - Get your new home ready or leave your old one spotless.</li>
+                    <li><strong>Office Cleaning</strong> - Keep your workplace clean and professional.</li>
+                </ul>
+                
+                <h3>Why Choose Us</h3>
+                <ul>
+                    <li>Experienced and professional cleaners</li>
+                    <li>Eco-friendly cleaning products</li>
+                    <li>Flexible scheduling options</li>
+                    <li>Competitive pricing</li>
+                    <li>100% satisfaction guarantee</li>
+                </ul>
+                
+                <h3>How to Embed the Chat Bot</h3>
+                <p>To embed the chat bot on your website, simply add the following code to your HTML:</p>
+                
+                <pre><code>&lt;!-- Add the chat bot container --&gt;
+&lt;div id="chat-container" data-cqb-container data-cqb-api-key="YOUR_API_KEY" data-cqb-primary-color="#4a90e2" data-cqb-secondary-color="#f5a623"&gt;&lt;/div&gt;
+
+&lt;!-- Add the chat bot script --&gt;
+&lt;link rel="stylesheet" href="path/to/chatbot.min.css"&gt;
+&lt;script src="path/to/chatbot.min.js"&gt;&lt;/script&gt;</code></pre>
+                
+                <p>Alternatively, you can initialize the chat bot programmatically:</p>
+                
+                <pre><code>&lt;!-- Add the chat bot container --&gt;
+&lt;div id="chat-container"&gt;&lt;/div&gt;
+
+&lt;!-- Add the chat bot script --&gt;
+&lt;link rel="stylesheet" href="path/to/chatbot.min.css"&gt;
+&lt;script src="path/to/chatbot.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  document.addEventListener('DOMContentLoaded', function() {
+    CleaningQuoteBot.init({
+      containerId: 'chat-container',
+      apiKey: 'YOUR_API_KEY',
+      theme: {
+        primaryColor: '#4a90e2',
+        secondaryColor: '#f5a623'
+      }
+    });
+  });
+&lt;/script&gt;</code></pre>
+            </div>
+            
+            <div class="sidebar">
+                <h3>Get a Quote</h3>
+                <p>Use our chat bot to get an instant quote for our cleaning services. Just answer a few questions about your home and we'll provide you with a personalized quote.</p>
+                
+                <!-- Chat bot container -->
+                <div id="chat-container"></div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Cleaning Service. All rights reserved.</p>
+    </footer>
+    
+    <!-- Include the chat bot script -->
+    <script src="src/js/index.js" type="module"></script>
+    <script>
+        // Initialize the chat bot
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.CleaningQuoteBot) {
+                window.CleaningQuoteBot.init({
+                    containerId: 'chat-container',
+                    apiKey: 'test-api-key',
+                    useMockApi: true,
+                    theme: {
+                        primaryColor: '#4a90e2',
+                        secondaryColor: '#f5a623'
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

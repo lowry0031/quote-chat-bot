@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaning Service Quote Bot - Test Page</title>
+    <link rel="stylesheet" href="../src/css/chatbot.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .test-controls {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1>Cleaning Service Website</h1>
+            <p>Welcome to our cleaning service website. We provide professional cleaning services for homes and offices.</p>
+            
+            <h2>Our Services</h2>
+            <ul>
+                <li>Regular Cleaning</li>
+                <li>Deep Cleaning</li>
+                <li>Move-in/Move-out Cleaning</li>
+                <li>Office Cleaning</li>
+            </ul>
+            
+            <h2>Why Choose Us</h2>
+            <p>We are committed to providing high-quality cleaning services at competitive prices. Our team of professionals is trained to deliver exceptional results.</p>
+            
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.</p>
+            
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.</p>
+        </div>
+        
+        <div class="sidebar">
+            <div class="test-controls">
+                <h3>Test Controls</h3>
+                <label>
+                    <input type="checkbox" id="use-mock-api" checked> 
+                    Use Mock API
+                </label>
+                <br>
+                <label>
+                    <select id="test-scenario">
+                        <option value="default">Default Flow</option>
+                        <option value="error">Error Handling</option>
+                        <option value="booking">Direct to Booking</option>
+                        <option value="postalCodeValid">Valid Postal Code</option>
+                        <option value="postalCodeInvalid">Invalid Postal Code</option>
+                    </select>
+                    Test Scenario
+                </label>
+                <br>
+                <button id="reset-chat">Reset Chat</button>
+            </div>
+            
+            <!-- Chat bot will be inserted here -->
+            <div id="chat-container"></div>
+        </div>
+    </div>
+    
+    <!-- Include the chatbot script -->
+    <script src="../src/js/index.js" type="module"></script>
+    <script>
+        // Initialize the chatbot with test configuration
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.CleaningQuoteBot) {
+                window.CleaningQuoteBot.init({
+                    containerId: 'chat-container',
+                    apiKey: 'test-api-key',
+                    useMockApi: document.getElementById('use-mock-api').checked,
+                    testScenario: document.getElementById('test-scenario').value,
+                    theme: {
+                        primaryColor: '#4a90e2',
+                        secondaryColor: '#f5a623'
+                    }
+                });
+                
+                // Test control event listeners
+                document.getElementById('use-mock-api').addEventListener('change', function(e) {
+                    window.CleaningQuoteBot.setOption('useMockApi', e.target.checked);
+                });
+                
+                document.getElementById('test-scenario').addEventListener('change', function(e) {
+                    window.CleaningQuoteBot.setOption('testScenario', e.target.value);
+                });
+                
+                document.getElementById('reset-chat').addEventListener('click', function() {
+                    window.CleaningQuoteBot.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

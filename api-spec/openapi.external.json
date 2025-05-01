@@ -1,0 +1,3101 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "v1",
+    "title": "MaidCentral API",
+    "description": "MaidCentral API provides access to the MaidCentral platform for managing cleaning service operations. This API allows you to create and manage leads, quotes, bookings, and more.",
+    "contact": {
+      "name": "MaidCentral Support",
+      "email": "support@maidcentral.com",
+      "url": "https://maidcentral.com/support"
+    },
+    "license": {
+      "name": "Proprietary",
+      "url": "https://maidcentral.com/terms"
+    }
+  },
+  "paths": {
+    "/api/Lead/CreateOrUpdate": {
+      "post": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Create or Update a Lead",
+        "operationId": "Lead_CreateOrUpdate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadCreateOrUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadCreateOrUpdateDto"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadCreateOrUpdateDto"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadCreateOrUpdateDto"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadCreateOrUpdateDto"
+              }
+            },
+            "text/html": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadCreateOrUpdateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDto_2"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDto_2"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDto_2"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDto_2"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDto_2"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/Lead": {
+      "get": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Gets a Lead",
+        "operationId": "Lead_Lead",
+        "parameters": [
+          {
+            "name": "leadId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/CreateOrUpdateQuote": {
+      "post": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Create or Update a Quote",
+        "operationId": "Lead_CreateOrUpdateQuote",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateQuoteDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateQuoteDto"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateQuoteDto"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateQuoteDto"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateQuoteDto"
+              }
+            },
+            "text/html": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateQuoteDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDetailDto_2"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDetailDto_2"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDetailDto_2"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDetailDto_2"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDetailDto_2"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/Quote": {
+      "get": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Gets a Quote",
+        "operationId": "Lead_Quote",
+        "parameters": [
+          {
+            "name": "quoteId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDetailDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDetailDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDetailDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDetailDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDetailDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/GetPricing": {
+      "post": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Get Pricing without creating a lead",
+        "operationId": "Lead_GetPricing",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetPricingInputDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetPricingInputDto"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/GetPricingInputDto"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/GetPricingInputDto"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/GetPricingInputDto"
+              }
+            },
+            "text/html": {
+              "schema": {
+                "$ref": "#/components/schemas/GetPricingInputDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDetailScopeDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDetailScopeDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDetailScopeDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDetailScopeDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerQuoteDetailScopeDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/BookQuote": {
+      "post": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Book a Quote",
+        "operationId": "Lead_BookQuote",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookQuoteDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookQuoteDto"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/BookQuoteDto"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/BookQuoteDto"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/BookQuoteDto"
+              }
+            },
+            "text/html": {
+              "schema": {
+                "$ref": "#/components/schemas/BookQuoteDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDetailDto_2"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDetailDto_2"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDetailDto_2"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDetailDto_2"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_CustomerQuoteDetailDto_2"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/Utm": {
+      "post": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Associate UTM Data with a Lead/Quote",
+        "operationId": "Lead_Utm",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteUtmDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteUtmDto"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteUtmDto"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteUtmDto"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteUtmDto"
+              }
+            },
+            "text/html": {
+              "schema": {
+                "$ref": "#/components/schemas/QuoteUtmDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_Boolean_2"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_Boolean_2"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_Boolean_2"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_Boolean_2"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_Boolean_2"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/ScopeGroups": {
+      "get": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Gets a list of Scope Groups",
+        "operationId": "Lead_ScopeGroups",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ScopeGroupDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ScopeGroupDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ScopeGroupDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ScopeGroupDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ScopeGroupDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/Scopes": {
+      "get": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Gets a list of Scopes for a Scope Group",
+        "operationId": "Lead_Scopes",
+        "parameters": [
+          {
+            "name": "scopeGroupId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ScopeDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ScopeDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ScopeDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ScopeDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_ScopeDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/ScopeFrequencies": {
+      "get": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Gets a list of Frequency options for a Scope",
+        "operationId": "Lead_ScopeFrequencies",
+        "parameters": [
+          {
+            "name": "scopeId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_FrequencyDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_FrequencyDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_FrequencyDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_FrequencyDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_FrequencyDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/CustomerSources": {
+      "get": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Gets a list of Customer Sources",
+        "operationId": "Lead_CustomerSources",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerSourceDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerSourceDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerSourceDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerSourceDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CustomerSourceDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/BillingTerms": {
+      "get": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Gets a list of Billing Terms",
+        "operationId": "Lead_BillingTerms",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_BillingTermsDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_BillingTermsDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_BillingTermsDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_BillingTermsDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_BillingTermsDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/Teams": {
+      "get": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Gets a list of Teams",
+        "operationId": "Lead_Teams",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_TeamApiDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_TeamApiDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_TeamApiDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_TeamApiDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_TeamApiDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/Tags": {
+      "get": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Gets a list of Tags with Categories",
+        "operationId": "Lead_Tags",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_TagDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_TagDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_TagDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_TagDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_TagDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/RateModifications": {
+      "get": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Gets a list of Rate Modifications for a Scope",
+        "operationId": "Lead_RateModifications",
+        "parameters": [
+          {
+            "name": "scopeId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_RateModLeadOutputDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_RateModLeadOutputDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_RateModLeadOutputDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_RateModLeadOutputDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_RateModLeadOutputDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/Questions": {
+      "get": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Gets a list of Questions for many Scopes",
+        "operationId": "Lead_Questions",
+        "parameters": [
+          {
+            "name": "scopeIds",
+            "in": "query",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_QuestionLeadOutputDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_QuestionLeadOutputDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_QuestionLeadOutputDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_QuestionLeadOutputDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_QuestionLeadOutputDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/Availability": {
+      "get": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Gets a list of Available Job Dates for a Scope Group, hours or amount is required. These determine if the quoted job can be booked.",
+        "operationId": "Lead_Availability",
+        "parameters": [
+          {
+            "name": "scopeGroupId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "hours",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "amount",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Optional, default is today",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "Optional, default is 1 month from today",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_DateTime_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_DateTime_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_DateTime_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_DateTime_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_DateTime_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Lead/PostalCodes": {
+      "get": {
+        "tags": [
+          "Lead"
+        ],
+        "summary": "Gets a list of servicable Postal Codes by Home Zone",
+        "operationId": "Lead_PostalCodes",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_PostalCodeZoneDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_PostalCodeZoneDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_PostalCodeZoneDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_PostalCodeZoneDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_PostalCodeZoneDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Note/Create": {
+      "post": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Creates a Note for a Customer, Quote, or Employee",
+        "operationId": "Note_Create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteCreateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteCreateDto"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteCreateDto"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteCreateDto"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteCreateDto"
+              }
+            },
+            "text/html": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteCreateDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_Int32_2"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_Int32_2"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_Int32_2"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_Int32_2"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_Int32_2"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Note/Types": {
+      "get": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Gets a list of Note Types",
+        "operationId": "Note_Types",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_NoteTypeDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_NoteTypeDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_NoteTypeDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_NoteTypeDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_NoteTypeDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Note/EntityTypes": {
+      "get": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Gets a list of Note Entity Types",
+        "operationId": "Note_EntityTypes",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_NoteEntityTypeDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_NoteEntityTypeDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_NoteEntityTypeDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_NoteEntityTypeDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_NoteEntityTypeDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Note/CommunicationDirections": {
+      "get": {
+        "tags": [
+          "Note"
+        ],
+        "summary": "Gets a list of Note Communication Directions",
+        "operationId": "Note_CommunicationDirections",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CommunicationDirectionDto_"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CommunicationDirectionDto_"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CommunicationDirectionDto_"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CommunicationDirectionDto_"
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse_List_CommunicationDirectionDto_"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "description": "Username",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "Password",
+                    "type": "string"
+                  },
+                  "grant_type": {
+                    "description": "'password' or 'refresh_token'",
+                    "type": "string",
+                    "default": "password"
+                  },
+                  "refresh_token": {
+                    "description": "Refresh token",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password",
+                  "grant_type"
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Retrive access token from username and password OR username and refresh token."
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.maidcentral.com",
+      "description": "Production API"
+    },
+    {
+      "url": "https://api.maidcentral.net",
+      "description": "Staging API"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "LeadCreateOrUpdateDto": {
+        "description": "Represents a lead",
+        "required": [
+          "FirstName",
+          "LastName",
+          "Email",
+          "Phone",
+          "PostalCode"
+        ],
+        "type": "object",
+        "properties": {
+          "SendLeadEmail": {
+            "description": "Optional, Sends the lead email, default is true",
+            "type": "boolean"
+          },
+          "AddToCampaigns": {
+            "description": "Optional, Add to MaidCentral campaigns, if enabled, default is true",
+            "type": "boolean"
+          },
+          "TriggerWebhook": {
+            "description": "Optional, Triggers applied Keap, Zapier, if enabled, default is true",
+            "type": "boolean"
+          },
+          "LeadId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "FirstName": {
+            "type": "string"
+          },
+          "LastName": {
+            "type": "string"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "Phone": {
+            "type": "string"
+          },
+          "PostalCode": {
+            "description": "Checks to see if the postal code is in the Home Zones",
+            "type": "string"
+          },
+          "RedirectUrl": {
+            "description": "Optional, Custom url to be included in the response",
+            "type": "string"
+          },
+          "Notes": {
+            "description": "Optional, To create a single note to be associated with the Lead",
+            "type": "string"
+          },
+          "CustomerSourceId": {
+            "format": "int32",
+            "description": "Optional, Valid options are supplied via /api/Lead/CustomerSources",
+            "type": "integer"
+          },
+          "LeadTagIds": {
+            "description": "Optional, Valid options are supplied via /api/Lead/Tags with CategoryId = 8",
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "utm_source": {
+            "type": "string"
+          },
+          "utm_medium": {
+            "type": "string"
+          },
+          "utm_campaign": {
+            "type": "string"
+          },
+          "utm_term": {
+            "type": "string"
+          },
+          "utm_content": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponse_CustomerQuoteDto_2": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "$ref": "#/components/schemas/CustomerQuoteDto"
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "CustomerQuoteDto": {
+        "type": "object",
+        "properties": {
+          "LeadId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "CustomerInformationId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "HomeInformationId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "FirstName": {
+            "type": "string"
+          },
+          "LastName": {
+            "type": "string"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "Phone": {
+            "type": "string"
+          },
+          "PostalCode": {
+            "type": "string"
+          },
+          "StatusId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "StatusName": {
+            "type": "string"
+          },
+          "BaseSiteUrl": {
+            "type": "string"
+          },
+          "MaidServiceQuoteUrl": {
+            "type": "string"
+          },
+          "ActivateUrl": {
+            "type": "string",
+            "readOnly": true
+          },
+          "CustomerSourceId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "CustomerSourceName": {
+            "type": "string"
+          },
+          "BillingTermsId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "BillingTermsName": {
+            "type": "string"
+          },
+          "ScopeGroupId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "ScopeGroupName": {
+            "type": "string"
+          },
+          "HomeAddress1": {
+            "type": "string"
+          },
+          "HomeAddress2": {
+            "type": "string"
+          },
+          "HomeCity": {
+            "type": "string"
+          },
+          "HomeRegion": {
+            "type": "string"
+          },
+          "HomePostalCode": {
+            "type": "string"
+          },
+          "BillingAddress1": {
+            "type": "string"
+          },
+          "BillingAddress2": {
+            "type": "string"
+          },
+          "BillingCity": {
+            "type": "string"
+          },
+          "BillingRegion": {
+            "type": "string"
+          },
+          "BillingPostalCode": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponse_List_CustomerQuoteDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerQuoteDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "CreateOrUpdateQuoteDto": {
+        "description": "Create or Update a Quote",
+        "required": [
+          "LeadId",
+          "HomeAddress1",
+          "HomeCity",
+          "HomeRegion",
+          "HomePostalCode",
+          "ScopeGroupId",
+          "ScopesOfWork",
+          "Questions"
+        ],
+        "type": "object",
+        "properties": {
+          "LeadId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "QuoteId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "HomeAddress1": {
+            "description": "Service Address 1",
+            "type": "string"
+          },
+          "HomeAddress2": {
+            "description": "Service Address 2",
+            "type": "string"
+          },
+          "HomeCity": {
+            "description": "Service Address City",
+            "type": "string"
+          },
+          "HomeRegion": {
+            "description": "2 character abbreviation",
+            "type": "string"
+          },
+          "HomePostalCode": {
+            "description": "To character abbreviation",
+            "type": "string"
+          },
+          "BillingAddress1": {
+            "description": "Optional, Billing information, uses the Service Address by default",
+            "type": "string"
+          },
+          "BillingAddress2": {
+            "type": "string"
+          },
+          "BillingCity": {
+            "type": "string"
+          },
+          "BillingRegion": {
+            "type": "string"
+          },
+          "BillingPostalCode": {
+            "type": "string"
+          },
+          "SendQuoteEmail": {
+            "description": "Optional, Sends the Quote to the Lead, default false, sends after 5 minutes. Does not send if the Quote is booked within the 5 minutes.",
+            "type": "boolean"
+          },
+          "AddToCampaigns": {
+            "description": "Optional, Add to MaidCentral campaigns, if enabled",
+            "type": "boolean"
+          },
+          "TriggerWebhook": {
+            "description": "Optional, Triggers applied Keap, Zapier, if enabled",
+            "type": "boolean"
+          },
+          "ScopeGroupId": {
+            "format": "int32",
+            "description": "Required if Scopes of Work are supplied and to save the addtional home information below",
+            "type": "integer"
+          },
+          "ScopesOfWork": {
+            "description": "List Scopes of Work that will marked as Interested",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DetailDto"
+            }
+          },
+          "Questions": {
+            "description": "To save answers to questions, Valid options are supplied via /api/Lead/Questions",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQuoteQuestionDto"
+            }
+          },
+          "utm_source": {
+            "type": "string"
+          },
+          "utm_medium": {
+            "type": "string"
+          },
+          "utm_campaign": {
+            "type": "string"
+          },
+          "utm_term": {
+            "type": "string"
+          },
+          "utm_content": {
+            "type": "string"
+          }
+        }
+      },
+      "DetailDto": {
+        "required": [
+          "ScopeOfWorkId",
+          "Frequency"
+        ],
+        "type": "object",
+        "properties": {
+          "ScopeOfWorkId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Frequency": {
+            "description": "Valid options are supplied via /api/Lead/ScopeGroups",
+            "type": "string"
+          },
+          "BaseFee": {
+            "format": "double",
+            "description": "Optional, to override the calculated price for this Frequency/Scope",
+            "type": "number"
+          },
+          "RateModifications": {
+            "description": "Optional, List of Rate Mods/Adjustments, including discounts\r\nValid options are supplied via /api/Lead/RateModifications?scopeId={yourScopeOfWorkId}",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RateModDto"
+            }
+          }
+        }
+      },
+      "RateModDto": {
+        "required": [
+          "Quantity",
+          "RateModificationId"
+        ],
+        "type": "object",
+        "properties": {
+          "Quantity": {
+            "format": "int32",
+            "description": "Quantity of the rate modification, must not be 0",
+            "type": "integer"
+          },
+          "RateModificationId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "IsRecurring": {
+            "type": "boolean"
+          },
+          "RateModificationFrequencyId": {
+            "format": "int32",
+            "type": "integer",
+            "readOnly": true
+          }
+        }
+      },
+      "ApiQuoteQuestionDto": {
+        "description": "Represents answering a question",
+        "required": [
+          "QuestionId",
+          "Answer"
+        ],
+        "type": "object",
+        "properties": {
+          "QuestionId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Answer": {
+            "description": "Answers to Multiple Select List should be comma separated AnswerId, everything else should be posted as string, Select Lists should be the AnswerId",
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponse_CustomerQuoteDetailDto_2": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "$ref": "#/components/schemas/CustomerQuoteDetailDto"
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "CustomerQuoteDetailDto": {
+        "type": "object",
+        "properties": {
+          "LeadId": {
+            "format": "int32",
+            "description": "The ID of the Lead",
+            "type": "integer"
+          },
+          "QuoteId": {
+            "format": "uuid",
+            "description": "The ID of the Quote",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "CustomerInformationId": {
+            "format": "int32",
+            "description": "If Booked, the ID of the Customer",
+            "type": "integer"
+          },
+          "HomeInformationId": {
+            "format": "int32",
+            "description": "If Booked, the ID of the Home",
+            "type": "integer"
+          },
+          "FirstName": {
+            "type": "string"
+          },
+          "LastName": {
+            "type": "string"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "Phone": {
+            "type": "string"
+          },
+          "PostalCode": {
+            "type": "string"
+          },
+          "StatusId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "StatusName": {
+            "type": "string"
+          },
+          "BaseSiteUrl": {
+            "description": "MaidCentral URL for the Partner",
+            "type": "string"
+          },
+          "MaidServiceQuoteUrl": {
+            "description": "The URL to the Online Quoting Form",
+            "type": "string"
+          },
+          "BookNowUrl": {
+            "description": "The URL to the Online Quoting Form to book immediately",
+            "type": "string",
+            "readOnly": true
+          },
+          "ActivateUrl": {
+            "description": "If Booked, the  Customer Portal Invite URL",
+            "type": "string",
+            "readOnly": true
+          },
+          "CustomerSourceId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "CustomerSourceName": {
+            "description": "The name of the Customer Source",
+            "type": "string"
+          },
+          "BillingTermsId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "BillingTermsName": {
+            "description": "The name of the Billing Terms",
+            "type": "string"
+          },
+          "ScopeGroupId": {
+            "format": "int32",
+            "description": "The ID of the Scope Group",
+            "type": "integer"
+          },
+          "ScopeGroupName": {
+            "description": "The name of the Scope Group",
+            "type": "string"
+          },
+          "Scopes": {
+            "description": "List of Scopes of Work",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerQuoteDetailScopeDto"
+            }
+          },
+          "HomeSquareFeet": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "HomeStories": {
+            "format": "double",
+            "type": "number"
+          },
+          "HomeHasBasement": {
+            "type": "boolean"
+          },
+          "HomeBedrooms": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "HomeFullBathrooms": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "HomeHalfBathrooms": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "HomeDirtCode": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "HomePets": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "HomePeople": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "HomeSpecialInstructions": {
+            "type": "string"
+          },
+          "HomePetInstructions": {
+            "type": "string"
+          },
+          "HomeSpecialEquipment": {
+            "type": "string"
+          },
+          "HomeWasteDisposal": {
+            "type": "string"
+          },
+          "HomeAccessInfo": {
+            "type": "string"
+          },
+          "HomeAddress1": {
+            "type": "string"
+          },
+          "HomeAddress2": {
+            "type": "string"
+          },
+          "HomeCity": {
+            "type": "string"
+          },
+          "HomeRegion": {
+            "type": "string"
+          },
+          "HomePostalCode": {
+            "type": "string"
+          },
+          "BillingAddress1": {
+            "type": "string"
+          },
+          "BillingAddress2": {
+            "type": "string"
+          },
+          "BillingCity": {
+            "type": "string"
+          },
+          "BillingRegion": {
+            "type": "string"
+          },
+          "BillingPostalCode": {
+            "type": "string"
+          },
+          "PECode": {
+            "type": "string"
+          },
+          "PEStartTime": {
+            "type": "string"
+          },
+          "PEEndTime": {
+            "type": "string"
+          },
+          "PEDaysOfWeek": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "CustomerQuoteDetailScopeDto": {
+        "type": "object",
+        "properties": {
+          "ScopeId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "ScopeName": {
+            "description": "The name of the Scope",
+            "type": "string"
+          },
+          "Frequencies": {
+            "description": "List of Frequencies and costs",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerQuoteDetailScopeFrequencyDto"
+            }
+          }
+        }
+      },
+      "CustomerQuoteDetailScopeFrequencyDto": {
+        "description": "Quote by Scope and Frequency",
+        "type": "object",
+        "properties": {
+          "IsBooked": {
+            "description": "If true, this scope/frequency is booked",
+            "type": "boolean",
+            "readOnly": true
+          },
+          "IsInterested": {
+            "description": "If true, this scope/frequency is marked as Interested",
+            "type": "boolean",
+            "readOnly": true
+          },
+          "FrequencyId": {
+            "type": "string"
+          },
+          "FrequencyName": {
+            "description": "The name of the Frequency",
+            "type": "string"
+          },
+          "AdjustedBaseCost": {
+            "format": "double",
+            "description": "The adjusted cost, (using rounding settings)",
+            "type": "number"
+          },
+          "CalculatedBaseCost": {
+            "format": "double",
+            "description": "The calculated cost",
+            "type": "number"
+          },
+          "TotalBaseHours": {
+            "format": "double",
+            "description": "The amount of time in minutes for this scope/frequency to perform the work",
+            "type": "number"
+          },
+          "TotalRecurringCost": {
+            "format": "double",
+            "description": "The total recurring cost, including RateModifications",
+            "type": "number",
+            "readOnly": true
+          },
+          "TotalFirstJobCost": {
+            "format": "double",
+            "description": "The total first job cost, including RateModifications",
+            "type": "number",
+            "readOnly": true
+          },
+          "TotalRecurringHours": {
+            "format": "double",
+            "description": "The total recurring hours, including RateModifications",
+            "type": "number",
+            "readOnly": true
+          },
+          "TotalFirstJobHours": {
+            "format": "double",
+            "description": "The total first job hours, including RateModifications",
+            "type": "number",
+            "readOnly": true
+          },
+          "RateModifications": {
+            "description": "List of Rate Modifications and costs",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerQuoteDetailRateModificationOutputDto"
+            }
+          },
+          "MinimumCost": {
+            "format": "double",
+            "description": "The minimum cost of this frequency",
+            "type": "number"
+          }
+        }
+      },
+      "CustomerQuoteDetailRateModificationOutputDto": {
+        "type": "object",
+        "properties": {
+          "Quantity": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "RateModificationId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "IsRecurring": {
+            "type": "boolean"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "CalculatedCost": {
+            "format": "double",
+            "type": "number"
+          },
+          "CalculatedHours": {
+            "format": "double",
+            "type": "number"
+          }
+        }
+      },
+      "ApiResponse_List_CustomerQuoteDetailDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerQuoteDetailDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "GetPricingInputDto": {
+        "description": "Get Pricing",
+        "required": [
+          "ScopeGroupId",
+          "ScopesOfWork",
+          "Questions"
+        ],
+        "type": "object",
+        "properties": {
+          "PostalCode": {
+            "type": "string"
+          },
+          "ScopeGroupId": {
+            "format": "int32",
+            "description": "",
+            "type": "integer"
+          },
+          "ScopesOfWork": {
+            "description": "List Scopes of Work",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DetailDto"
+            }
+          },
+          "Questions": {
+            "description": "Valid options are supplied via /api/Lead/Questions",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiQuoteQuestionDto"
+            }
+          }
+        }
+      },
+      "ApiResponse_List_CustomerQuoteDetailScopeDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerQuoteDetailScopeDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "BookQuoteDto": {
+        "description": "Book a Quote",
+        "required": [
+          "LeadId",
+          "QuoteId",
+          "ScopeGroupId",
+          "ScopesOfWork"
+        ],
+        "type": "object",
+        "properties": {
+          "LeadId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "QuoteId": {
+            "format": "uuid",
+            "type": "string",
+            "example": "00000000-0000-0000-0000-000000000000"
+          },
+          "SendBookedEmail": {
+            "description": "Optional, Sends the Booking Confirmation when converting to a customer",
+            "type": "boolean"
+          },
+          "SendCustomerPortalInvite": {
+            "description": "Optional, If the Customer Portal is enabled, sends the create portal account email",
+            "type": "boolean"
+          },
+          "AddToCampaigns": {
+            "description": "Optional, Add to MaidCentral campaigns, if enabled, default is true",
+            "type": "boolean"
+          },
+          "TriggerWebhook": {
+            "description": "Optional, Triggers applied Keap, Zapier, if enabled, default is true",
+            "type": "boolean"
+          },
+          "ScopeGroupId": {
+            "format": "int32",
+            "description": "Required",
+            "type": "integer"
+          },
+          "ScopesOfWork": {
+            "description": "List Scopes of Work to book and create job(s)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookDetailDto"
+            }
+          },
+          "BillingTermsId": {
+            "format": "int32",
+            "description": "Valid options are supplied via /api/Lead/BillingTerms; default is credit card",
+            "type": "integer"
+          },
+          "CustomerTagIds": {
+            "description": "Optional, Valid options are supplied via /api/Lead/Tags with CategoryId = 3",
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "HomeServiceTagIds": {
+            "description": "Optional, Valid options are supplied via /api/Lead/Tags with CategoryId = 4",
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "utm_source": {
+            "type": "string"
+          },
+          "utm_medium": {
+            "type": "string"
+          },
+          "utm_campaign": {
+            "type": "string"
+          },
+          "utm_term": {
+            "type": "string"
+          },
+          "utm_content": {
+            "type": "string"
+          }
+        }
+      },
+      "BookDetailDto": {
+        "required": [
+          "FirstJobDate",
+          "ScopeOfWorkId",
+          "Frequency"
+        ],
+        "type": "object",
+        "properties": {
+          "FirstJobDate": {
+            "format": "date-time",
+            "description": "The date in which the first job is to be scheduled",
+            "type": "string"
+          },
+          "FirstJobInstructions": {
+            "description": "Optional, To be included with the first job",
+            "type": "string"
+          },
+          "FirstJobTagIds": {
+            "description": "Optional, Valid options are supplied via /api/Lead/Tags with CategoryId = 6",
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "ServiceSetTagIds": {
+            "description": "Optional, Valid options are supplied via /api/Lead/Tags with CategoryId = 5",
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "TeamIds": {
+            "description": "Optional, List of Teams to schedule the job\r\nValid options are supplied via /api/Lead/Teams",
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "ScopeOfWorkId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Frequency": {
+            "description": "Valid options are supplied via /api/Lead/ScopeGroups",
+            "type": "string"
+          },
+          "BaseFee": {
+            "format": "double",
+            "description": "Optional, to override the calculated price for this Frequency/Scope",
+            "type": "number"
+          },
+          "RateModifications": {
+            "description": "Optional, List of Rate Mods/Adjustments, including discounts\r\nValid options are supplied via /api/Lead/RateModifications?scopeId={yourScopeOfWorkId}",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RateModDto"
+            }
+          }
+        }
+      },
+      "QuoteUtmDto": {
+        "description": "Must supply one of LeadId, Email, or Phone.",
+        "type": "object",
+        "properties": {
+          "LeadId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Email": {
+            "type": "string"
+          },
+          "Phone": {
+            "type": "string"
+          },
+          "utm_source": {
+            "type": "string"
+          },
+          "utm_medium": {
+            "type": "string"
+          },
+          "utm_campaign": {
+            "type": "string"
+          },
+          "utm_term": {
+            "type": "string"
+          },
+          "utm_content": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponse_Boolean_2": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "boolean"
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ApiResponse_List_ScopeGroupDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScopeGroupDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ScopeGroupDto": {
+        "type": "object",
+        "properties": {
+          "ScopeGroupId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Scopes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScopeDto"
+            }
+          }
+        }
+      },
+      "ScopeDto": {
+        "type": "object",
+        "properties": {
+          "ScopeId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "IsRequired": {
+            "description": "If true, the scope is a required for this scope group",
+            "type": "boolean"
+          },
+          "Frequencies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FrequencyDto"
+            }
+          }
+        }
+      },
+      "FrequencyDto": {
+        "type": "object",
+        "properties": {
+          "FrequencyId": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponse_List_ScopeDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScopeDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ApiResponse_List_FrequencyDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FrequencyDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ApiResponse_List_CustomerSourceDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerSourceDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "CustomerSourceDto": {
+        "type": "object",
+        "properties": {
+          "CustomerSourceId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponse_List_BillingTermsDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BillingTermsDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "BillingTermsDto": {
+        "type": "object",
+        "properties": {
+          "BillingTermsId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponse_List_TeamApiDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeamApiDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "TeamApiDto": {
+        "type": "object",
+        "properties": {
+          "TeamId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Color": {
+            "type": "string"
+          },
+          "SortOrder": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ApiResponse_List_TagDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "TagDto": {
+        "type": "object",
+        "properties": {
+          "TagId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Category": {
+            "type": "string"
+          },
+          "CategoryId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "Color": {
+            "description": "For custom display properties",
+            "type": "string"
+          },
+          "Icon": {
+            "description": "For custom display properties",
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponse_List_RateModLeadOutputDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RateModLeadOutputDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "RateModLeadOutputDto": {
+        "type": "object",
+        "properties": {
+          "RateModificationId": {
+            "format": "int32",
+            "description": "The ID of the rate modification",
+            "type": "integer"
+          },
+          "Name": {
+            "description": "The short name of the rate modification",
+            "type": "string"
+          },
+          "Description": {
+            "description": "Additioanl information about the rate modification",
+            "type": "string"
+          },
+          "IsPercentage": {
+            "description": "If true, the rate modification is a percentage of the base fee",
+            "type": "boolean"
+          },
+          "IsRequired": {
+            "description": "If true, the rate modification is a required for this scope",
+            "type": "boolean"
+          },
+          "ScopeId": {
+            "format": "int32",
+            "description": "The Scope this rate modification is associated with",
+            "type": "integer"
+          },
+          "Cost": {
+            "format": "double",
+            "description": "Cost of the rate modification",
+            "type": "number"
+          },
+          "CostDisplay": {
+            "description": "The cost of the rate modification as a string",
+            "type": "string",
+            "readOnly": true
+          },
+          "CostCalcType": {
+            "format": "int32",
+            "enum": [
+              0,
+              1
+            ],
+            "type": "integer"
+          },
+          "CostCalcDescription": {
+            "description": "The method used to calculate the cost of the rate modification",
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponse_List_QuestionLeadOutputDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionLeadOutputDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "QuestionLeadOutputDto": {
+        "type": "object",
+        "properties": {
+          "ScopeId": {
+            "format": "int32",
+            "description": "The Scope this question is associated with",
+            "type": "integer"
+          },
+          "QuestionId": {
+            "format": "int32",
+            "description": "The ID of the question",
+            "type": "integer"
+          },
+          "IsRequired": {
+            "description": "If true, the question must be posted and an answer supplied",
+            "type": "boolean"
+          },
+          "QuestionText": {
+            "description": "The question text to be displayed",
+            "type": "string"
+          },
+          "Answers": {
+            "description": "List of answers to the question",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnswerLeadOutputDto"
+            }
+          },
+          "HelpText": {
+            "description": "Helper text to be displayed",
+            "type": "string"
+          },
+          "Icon": {
+            "description": "For custom display properties",
+            "type": "string"
+          },
+          "Color": {
+            "description": "For custom display properties",
+            "type": "string"
+          },
+          "QuestionStepType": {
+            "description": "When the question is asked",
+            "type": "string"
+          },
+          "QuestionType": {
+            "description": "The type of question (select list, multiple select list, text, number, etc.)",
+            "type": "string"
+          },
+          "TextValue": {
+            "description": "The answer default value, if not supplied",
+            "type": "string"
+          },
+          "PricingAdjustmentDescription": {
+            "description": "If the question changes affects the price",
+            "type": "string"
+          },
+          "SortOrder": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "AnswerLeadOutputDto": {
+        "description": "Represents an answer options to the question",
+        "type": "object",
+        "properties": {
+          "AnswerId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "AnswerText": {
+            "description": "The answer text to be displayed",
+            "type": "string"
+          },
+          "Icon": {
+            "description": "For custom display properties",
+            "type": "string"
+          },
+          "Color": {
+            "description": "For custom display properties",
+            "type": "string"
+          },
+          "HelpText": {
+            "description": "Helper text to be displayed",
+            "type": "string"
+          },
+          "SortOrder": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ApiResponse_List_DateTime_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ApiResponse_List_PostalCodeZoneDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PostalCodeZoneDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "PostalCodeZoneDto": {
+        "type": "object",
+        "properties": {
+          "PostalCode": {
+            "type": "string"
+          },
+          "ZoneName": {
+            "type": "string"
+          },
+          "ZoneId": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "NoteCreateDto": {
+        "description": "Either EntityId or EntityContactInfo must be supplied",
+        "required": [
+          "EntityTypeId",
+          "Content"
+        ],
+        "type": "object",
+        "properties": {
+          "EntityTypeId": {
+            "format": "int32",
+            "description": "Type of entity this note is associated with\r\nQuote = 0, Customer = 1, Employee = 2",
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "type": "integer"
+          },
+          "EntityId": {
+            "format": "int32",
+            "description": "ID of the entity this note is associated with",
+            "type": "integer"
+          },
+          "EntityContactInfo": {
+            "description": "Contact information of the entity (email, phone, etc.)",
+            "type": "string"
+          },
+          "NoteTypeId": {
+            "format": "int32",
+            "description": "ID of the note type\r\nEmail = 1, Note = 2 (default), PhoneCall = 3, TextMessage = 4;",
+            "type": "integer"
+          },
+          "Subject": {
+            "description": "Subject: Required if not type is email",
+            "type": "string"
+          },
+          "Content": {
+            "description": "The note content",
+            "type": "string"
+          },
+          "CreateTicket": {
+            "description": "For communication notes, indicates if this note should create a ticket, default = false",
+            "type": "boolean"
+          },
+          "CommunicationInfo": {
+            "$ref": "#/components/schemas/CommunicationInfoDto"
+          }
+        }
+      },
+      "CommunicationInfoDto": {
+        "description": "Contains information about communication direction and contact details, if null - assumes a note",
+        "type": "object",
+        "properties": {
+          "CommunicationDirectionId": {
+            "format": "int32",
+            "description": "Direction of communication: InternalNote = 0 (default), Incoming = 1, Outgoing = 2 - (incoming: sent TO company / outgoing: sent FROM company)",
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "type": "integer"
+          },
+          "SenderContactInfo": {
+            "description": "Sender contact information (email/phone)",
+            "type": "string"
+          },
+          "RecipientContactInfo": {
+            "description": "Recipient contact information (email/phone)",
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponse_Int32_2": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "ApiResponse_List_NoteTypeDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NoteTypeDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "NoteTypeDto": {
+        "type": "object",
+        "properties": {
+          "NoteTypeId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponse_List_NoteEntityTypeDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NoteEntityTypeDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "NoteEntityTypeDto": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "ApiResponse_List_CommunicationDirectionDto_": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "Message": {
+            "type": "string"
+          },
+          "Result": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommunicationDirectionDto"
+            }
+          },
+          "InnerException": {
+            "type": "string"
+          },
+          "StatusCode": {
+            "format": "int32",
+            "type": "integer"
+          }
+        }
+      },
+      "CommunicationDirectionDto": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "Id": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "Name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Enter the token obtained from the /token endpoint. Use the format: Bearer {token}"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}
