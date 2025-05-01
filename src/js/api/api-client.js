@@ -3,7 +3,7 @@
  * This file handles communication with the MaidCentral API
  */
 
-import { createEventEmitter } from '../utils/helpers.js';
+import { createEventEmitter, logApiData } from '../utils/helpers.js';
 import { API_ACTIONS } from '../utils/config.js';
 import { mockAPI } from './mock-api.js';
 
@@ -35,8 +35,9 @@ export class APIClient {
    * Execute an API action
    * @param {string} action - API action to execute
    * @param {Object} params - Parameters for the action
+   * @param {number} retryCount - Number of retry attempts (internal use)
    */
-  async executeAction(action, params) {
+  async executeAction(action, params, retryCount = 0) {
     try {
       // If using mock API, use that instead
       if (this.config.useMockApi) {
@@ -83,6 +84,23 @@ export class APIClient {
           throw new Error(`Unknown API action: ${action}`);
       }
     } catch (error) {
+      // Check if this is an authentication error and we haven't exceeded max retries
+      if ((error.message.includes('Authentication failed') || error.message.includes('permission')) && 
+          retryCount < this.config.maxRetries) {
+        console.warn(`Authentication error, retrying (${retryCount + 1}/${this.config.maxRetries})...`);
+        
+        // Clear token to force re-authentication
+        this.token = null;
+        this.tokenExpiry = null;
+        
+        // Wait a bit before retrying
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Retry the action with incremented retry count
+        return this.executeAction(action, params, retryCount + 1);
+      }
+      
+      // If we've exceeded retries or it's not an authentication error, emit the error
       console.error(`Error executing API action ${action}:`, error);
       this.emit('error', error);
     }
@@ -95,11 +113,43 @@ export class APIClient {
    */
   async handleMockAPI(action, params) {
     try {
+      console.log(`[API Client] Handling mock API call for action: ${action}`, params);
+      
+      // Log request
+      const requestData = {
+        action,
+        params,
+        testScenario: this.config.testScenario,
+        mock: true
+      };
+      logApiData('request', action, requestData, this.config);
+      
       // Get mock response
       const response = await mockAPI(action, params, this.config.testScenario);
       
+      // Log response
+      console.log(`[API Client] Mock API response received for action: ${action}`, response);
+      logApiData('response', action, response, this.config);
+      
+      // Emit response event
+      console.log(`[API Client] Emitting response event for action: ${action}`);
+      console.log(`[API Client] Response data:`, response);
+      
+      // Check if response is valid
+      if (!response || !response.Result) {
+        console.error(`[API Client] Invalid response for action ${action}:`, response);
+        this.emit('error', new Error(`Invalid API response for action ${action}`));
+        return;
+      }
+      
+      // Verify event listeners
+      console.log(`[API Client] Event listeners for 'response':`, this._events ? this._events.response : 'No events property');
+      
       // Emit response event
       this.emit('response', response);
+      
+      // Verify the response was emitted
+      console.log(`[API Client] Response event emitted for action: ${action}`);
     } catch (error) {
       console.error(`Error with mock API for action ${action}:`, error);
       this.emit('error', error);
@@ -124,27 +174,72 @@ export class APIClient {
    */
   async authenticate() {
     try {
-      const response = await fetch(`${this.config.apiUrl}/token`, {
+      // Determine username and password
+      // For backward compatibility, use apiKey if username/password not provided
+      const username = this.config.username || this.config.apiKey;
+      const password = this.config.password || this.config.apiKey;
+      
+      if (!username || !password) {
+        throw new Error('Authentication failed: No username/password or apiKey provided');
+      }
+      
+      const url = `${this.config.apiUrl}/token`;
+      const requestBody = new URLSearchParams({
+        username,
+        password,
+        grant_type: 'password'
+      });
+      
+      // Log authentication request (mask password for security)
+      const requestData = {
+        url,
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: new URLSearchParams({
-          username: this.config.apiKey,
-          password: this.config.apiKey,
+        body: {
+          username,
+          password: '********', // Mask password
           grant_type: 'password'
-        })
+        }
+      };
+      logApiData('request', 'authenticate', requestData, this.config);
+      
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: requestBody
       });
       
       if (!response.ok) {
-        throw new Error(`Authentication failed: ${response.status} ${response.statusText}`);
+        // Handle specific authentication errors
+        if (response.status === 401) {
+          throw new Error('Authentication failed: Invalid username or password. Please check your credentials.');
+        } else if (response.status === 403) {
+          throw new Error('Authentication failed: You do not have permission to access this resource.');
+        } else {
+          throw new Error(`Authentication failed: ${response.status} ${response.statusText}`);
+        }
       }
       
       const data = await response.json();
       
+      // Log authentication response (mask token for security)
+      const responseData = {
+        ...data,
+        access_token: data.access_token ? '********' : null // Mask token
+      };
+      logApiData('response', 'authenticate', responseData, this.config);
+      
       // Store token and expiry
       this.token = data.access_token;
       this.tokenExpiry = Date.now() + (data.expires_in * 1000);
+      
+      if (this.config.debug) {
+        console.log('Authentication successful, token expires in', data.expires_in, 'seconds');
+      }
     } catch (error) {
       console.error('Authentication error:', error);
       throw error;
@@ -174,13 +269,38 @@ export class APIClient {
         options.body = JSON.stringify(data);
       }
       
+      // Determine API action from endpoint
+      const action = this.getActionFromEndpoint(endpoint);
+      
+      // Log request
+      const requestData = {
+        url,
+        method,
+        headers: options.headers,
+        body: data
+      };
+      logApiData('request', action, requestData, this.config);
+      
       const response = await fetch(url, options);
       
       if (!response.ok) {
-        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+        // Handle specific error codes
+        if (response.status === 401 || response.status === 403) {
+          // Authentication or authorization error
+          this.token = null; // Clear the token to force re-authentication
+          this.tokenExpiry = null;
+          throw new Error(`Authentication failed: You do not have permission to access this resource. Please check your credentials.`);
+        } else {
+          throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+        }
       }
       
-      return await response.json();
+      const responseData = await response.json();
+      
+      // Log response
+      logApiData('response', action, responseData, this.config);
+      
+      return responseData;
     } catch (error) {
       console.error(`API request error (${endpoint}):`, error);
       throw error;
@@ -196,8 +316,14 @@ export class APIClient {
       const response = await this.request(`/api/lead/postalCodes?postalCode=${postalCode}`);
       this.emit('response', response);
     } catch (error) {
-      console.error('Error validating postal code:', error);
-      this.emit('error', error);
+      // Check if this is an authentication error
+      if (error.message.includes('Authentication failed') || error.message.includes('permission')) {
+        // Propagate the error for retry handling in executeAction
+        throw error;
+      } else {
+        console.error('Error validating postal code:', error);
+        this.emit('error', error);
+      }
     }
   }
   
@@ -350,5 +476,38 @@ export class APIClient {
   updateConfig(config) {
     // Update config
     Object.assign(this.config, config);
+  }
+  
+  /**
+   * Get API action from endpoint
+   * @param {string} endpoint - API endpoint
+   * @returns {string} API action
+   */
+  getActionFromEndpoint(endpoint) {
+    // Map endpoints to actions
+    if (endpoint.includes('/api/lead/postalCodes')) {
+      return API_ACTIONS.VALIDATE_POSTAL_CODE;
+    } else if (endpoint.includes('/api/Lead/ScopeGroups')) {
+      return API_ACTIONS.GET_SCOPE_GROUPS;
+    } else if (endpoint.includes('/api/Lead/Scopes')) {
+      return API_ACTIONS.GET_SCOPES;
+    } else if (endpoint.includes('/api/Lead/Questions')) {
+      return API_ACTIONS.GET_QUESTIONS;
+    } else if (endpoint.includes('/api/Lead/RateModifications')) {
+      return API_ACTIONS.GET_RATE_MODIFICATIONS;
+    } else if (endpoint.includes('/api/Lead/GetPricing')) {
+      return API_ACTIONS.GET_PRICING;
+    } else if (endpoint.includes('/api/Lead/CreateOrUpdate')) {
+      return API_ACTIONS.CREATE_LEAD;
+    } else if (endpoint.includes('/api/Lead/CreateOrUpdateQuote')) {
+      return API_ACTIONS.CREATE_QUOTE;
+    } else if (endpoint.includes('/api/Lead/Availability')) {
+      return API_ACTIONS.GET_AVAILABILITY;
+    } else if (endpoint.includes('/api/Lead/BookQuote')) {
+      return API_ACTIONS.BOOK_QUOTE;
+    } else {
+      // Default to endpoint path if no match
+      return endpoint.split('?')[0];
+    }
   }
 }

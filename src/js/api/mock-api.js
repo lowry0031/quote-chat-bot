@@ -16,6 +16,11 @@ export async function mockAPI(action, params, scenario = 'default') {
   // Add a delay to simulate network latency
   await new Promise(resolve => setTimeout(resolve, 500));
   
+  console.log(`[Mock API] Called action: ${action} with params:`, params, `scenario: ${scenario}`);
+  
+  // Add a delay to simulate network latency
+  console.log(`[Mock API] Waiting 500ms to simulate network latency...`);
+  
   // Handle different scenarios
   if (scenario === 'error') {
     return mockErrorResponse(action);
@@ -70,8 +75,11 @@ function mockErrorResponse(action) {
  * @returns {Object} Mock response
  */
 function mockValidatePostalCode(postalCode, scenario) {
+  console.log(`[Mock API] mockValidatePostalCode called with postalCode: ${postalCode}, scenario: ${scenario}`);
+  
   // For the postalCodeInvalid scenario, return service not available
   if (scenario === 'postalCodeInvalid') {
+    console.log(`[Mock API] Returning postalCodeInvalid response`);
     return {
       IsSuccess: true,
       Message: null,
@@ -92,6 +100,7 @@ function mockValidatePostalCode(postalCode, scenario) {
   }
   
   // Default response
+  console.log(`[Mock API] Returning default response for postal code: ${postalCode}`);
   return {
     IsSuccess: true,
     Message: null,

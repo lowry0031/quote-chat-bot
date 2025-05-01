@@ -141,27 +141,42 @@ export function debounce(func, wait = 300) {
  */
 export function createEventEmitter() {
   const events = {};
-  
-  return {
+  const emitter = {
     on(event, listener) {
       if (!events[event]) {
         events[event] = [];
       }
       events[event].push(listener);
+      console.log(`[Event Emitter] Added listener for event: ${event}, total listeners: ${events[event].length}`);
     },
     
     off(event, listener) {
       if (!events[event]) return;
+      const initialLength = events[event].length;
       events[event] = events[event].filter(l => l !== listener);
+      console.log(`[Event Emitter] Removed listener for event: ${event}, before: ${initialLength}, after: ${events[event].length}`);
     },
     
     emit(event, ...args) {
-      if (!events[event]) return;
+      if (!events[event]) {
+        console.warn(`[Event Emitter] No listeners for event: ${event}`);
+        return;
+      }
+      console.log(`[Event Emitter] Emitting event: ${event} to ${events[event].length} listeners`);
       events[event].forEach(listener => {
-        listener(...args);
+        try {
+          listener(...args);
+        } catch (error) {
+          console.error(`[Event Emitter] Error in listener for event ${event}:`, error);
+        }
       });
     }
   };
+  
+  // Expose events for debugging
+  emitter._events = events;
+  
+  return emitter;
 }
 
 /**
@@ -205,5 +220,73 @@ export function removeStorageItem(key, prefix = 'cqb_') {
     localStorage.removeItem(`${prefix}${key}`);
   } catch (error) {
     console.error('Error removing data from localStorage:', error);
+  }
+}
+
+/**
+ * Log API request or response to a file
+ * @param {string} type - 'request' or 'response'
+ * @param {string} action - API action
+ * @param {Object} data - Data to log
+ * @param {Object} config - Configuration options
+ */
+export function logApiData(type, action, data, config) {
+  // Check if API logging is enabled
+  if (!config.apiLogging || !config.apiLogging.enabled) {
+    return;
+  }
+  
+  // Check if we should log this type
+  if ((type === 'request' && !config.apiLogging.logRequests) || 
+      (type === 'response' && !config.apiLogging.logResponses)) {
+    return;
+  }
+  
+  try {
+    // Create timestamp
+    const timestamp = new Date().toISOString();
+    const formattedTimestamp = timestamp.replace(/:/g, '-').replace(/\./g, '-');
+    
+    // Create log content
+    const logContent = {
+      timestamp,
+      type,
+      action,
+      data
+    };
+    
+    // Convert to JSON
+    const jsonContent = JSON.stringify(logContent, null, 2);
+    
+    // Create filename
+    const filename = `api-log-${type}-${action}-${formattedTimestamp}.json`;
+    
+    // Create a blob with the data
+    const blob = new Blob([jsonContent], { type: 'application/json' });
+    
+    // Create a URL for the blob
+    const url = URL.createObjectURL(blob);
+    
+    // Create a link element
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    
+    // Append to the document
+    document.body.appendChild(link);
+    
+    // Trigger the download
+    link.click();
+    
+    // Clean up
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    // Log to console if debug is enabled
+    if (config.debug) {
+      console.log(`API ${type} logged to ${filename}`);
+    }
+  } catch (error) {
+    console.error(`Error logging API ${type}:`, error);
   }
 }

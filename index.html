@@ -116,11 +116,27 @@
                 <p>To embed the chat bot on your website, simply add the following code to your HTML:</p>
                 
                 <pre><code>&lt;!-- Add the chat bot container --&gt;
-&lt;div id="chat-container" data-cqb-container data-cqb-api-key="YOUR_API_KEY" data-cqb-primary-color="#4a90e2" data-cqb-secondary-color="#f5a623"&gt;&lt;/div&gt;
+&lt;div id="chat-container" data-cqb-container data-cqb-username="YOUR_USERNAME" data-cqb-password="YOUR_PASSWORD" data-cqb-primary-color="#4a90e2" data-cqb-secondary-color="#f5a623"&gt;&lt;/div&gt;
 
 &lt;!-- Add the chat bot script --&gt;
 &lt;link rel="stylesheet" href="path/to/chatbot.min.css"&gt;
 &lt;script src="path/to/chatbot.min.js"&gt;&lt;/script&gt;</code></pre>
+
+                <h3>API Logging</h3>
+                <p>For troubleshooting, you can enable API logging to save API request and response payloads:</p>
+                
+                <pre><code>&lt;script&gt;
+  document.addEventListener('DOMContentLoaded', function() {
+    CleaningQuoteBot.init({
+      // ... other options ...
+      apiLogging: {
+        enabled: true,
+        logRequests: true,
+        logResponses: true
+      }
+    });
+  });
+&lt;/script&gt;</code></pre>
                 
                 <p>Alternatively, you can initialize the chat bot programmatically:</p>
                 
@@ -134,7 +150,8 @@
   document.addEventListener('DOMContentLoaded', function() {
     CleaningQuoteBot.init({
       containerId: 'chat-container',
-      apiKey: 'YOUR_API_KEY',
+      username: 'YOUR_USERNAME',
+      password: 'YOUR_PASSWORD',
       theme: {
         primaryColor: '#4a90e2',
         secondaryColor: '#f5a623'
@@ -166,11 +183,18 @@
             if (window.CleaningQuoteBot) {
                 window.CleaningQuoteBot.init({
                     containerId: 'chat-container',
-                    apiKey: 'test-api-key',
+                    username: 'test-username',
+                    password: 'test-password',
                     useMockApi: true,
+                    debug: true,
                     theme: {
                         primaryColor: '#4a90e2',
                         secondaryColor: '#f5a623'
+                    },
+                    apiLogging: {
+                        enabled: true,
+                        logRequests: true,
+                        logResponses: true
                     }
                 });
             }

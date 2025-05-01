@@ -5,8 +5,10 @@
 
 export const defaultConfig = {
   // API Configuration
-  apiKey: null,
-  apiUrl: 'https://api.maidcentral.com',
+  apiKey: null, // Deprecated: Use username and password instead
+  username: null,
+  password: null,
+  apiUrl: 'https://api.maidcentral.net',
   useMockApi: false,
   
   // UI Configuration
@@ -35,11 +37,20 @@ export const defaultConfig = {
   onBookingComplete: null,
   
   // Advanced Configuration
-  debug: false,
+  debug: true,
   pollingInterval: 5000, // 5 seconds
   maxRetries: 3,
   storagePrefix: 'cqb_',
-  useLocalStorage: true
+  useLocalStorage: true,
+  
+  // API Logging Configuration
+  apiLogging: {
+    enabled: false,
+    logDirectory: './api-logs',
+    logRequests: true,
+    logResponses: true,
+    maxLogFiles: 100
+  }
 };
 
 // Conversation states

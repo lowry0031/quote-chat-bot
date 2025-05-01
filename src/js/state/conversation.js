@@ -35,6 +35,7 @@ export const conversationFlow = {
         };
       }
       
+      console.log(`[Conversation] Transitioning to VALIDATING_POSTAL_CODE with postal code: ${postalCode}`);
       return {
         data: { postalCode },
         nextState: STATES.VALIDATING_POSTAL_CODE,
@@ -46,14 +47,37 @@ export const conversationFlow = {
   
   // Validating postal code state
   [STATES.VALIDATING_POSTAL_CODE]: {
-    enter: () => {
+    enter: (data) => {
+      console.log(`[Conversation] Entering VALIDATING_POSTAL_CODE state with data:`, data);
       return {
         message: "I'm checking if we provide service in your area...",
+        inputType: null,
+        apiAction: API_ACTIONS.VALIDATE_POSTAL_CODE,
+        apiParams: { postalCode: data.postalCode }
+      };
+    },
+    handleInput: (input, data) => {
+      // User input is not expected in this state, but handle it gracefully
+      return {
+        message: "Please wait while I check if we provide service in your area...",
         inputType: null
       };
     },
     handleAPIResponse: (response, data) => {
+      console.log(`[Conversation] VALIDATING_POSTAL_CODE handleAPIResponse called with:`, response);
+      
+      // Check if response is valid
+      if (!response || !response.Result) {
+        console.error(`[Conversation] Invalid API response in VALIDATING_POSTAL_CODE:`, response);
+        return {
+          nextState: STATES.ERROR,
+          message: "I'm sorry, I couldn't validate your postal code. Please try again.",
+          data: { error: "Invalid API response" }
+        };
+      }
+      
       const postalCodeData = response.Result;
+      console.log(`[Conversation] Postal code data:`, postalCodeData);
       
       // Check if service is available
       if (postalCodeData.IsValid && postalCodeData.IsServiceAvailable) {
@@ -64,6 +88,7 @@ export const conversationFlow = {
           message += ` ${postalCodeData.Notes}`;
         }
         
+        console.log(`[Conversation] Service is available, transitioning to SERVICE_SELECTION`);
         return {
           data: { postalCodeData },
           nextState: STATES.SERVICE_SELECTION,
@@ -71,6 +96,7 @@ export const conversationFlow = {
           apiAction: API_ACTIONS.GET_SCOPE_GROUPS
         };
       } else {
+        console.log(`[Conversation] Service is NOT available, transitioning to SERVICE_UNAVAILABLE`);
         return {
           data: { postalCodeData },
           nextState: STATES.SERVICE_UNAVAILABLE,
@@ -253,6 +279,13 @@ export const conversationFlow = {
     enter: () => {
       return {
         message: "I'm calculating your quote based on the information you provided...",
+        inputType: null
+      };
+    },
+    handleInput: (input, data) => {
+      // User input is not expected in this state, but handle it gracefully
+      return {
+        message: "Please wait while I calculate your quote...",
         inputType: null
       };
     },
@@ -486,6 +519,13 @@ export const conversationFlow = {
         inputType: null
       };
     },
+    handleInput: (input, data) => {
+      // User input is not expected in this state, but handle it gracefully
+      return {
+        message: "Please wait while I create your account...",
+        inputType: null
+      };
+    },
     handleAPIResponse: (response, data) => {
       // Store lead ID
       return {
@@ -520,6 +560,13 @@ export const conversationFlow = {
     enter: () => {
       return {
         message: "Creating your quote...",
+        inputType: null
+      };
+    },
+    handleInput: (input, data) => {
+      // User input is not expected in this state, but handle it gracefully
+      return {
+        message: "Please wait while I create your quote...",
         inputType: null
       };
     },
@@ -659,6 +706,13 @@ export const conversationFlow = {
     enter: () => {
       return {
         message: "Processing your booking...",
+        inputType: null
+      };
+    },
+    handleInput: (input, data) => {
+      // User input is not expected in this state, but handle it gracefully
+      return {
+        message: "Please wait while I process your booking...",
         inputType: null
       };
     },

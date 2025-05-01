@@ -95,6 +95,8 @@ export class StateManager {
    * @param {Object} response - API response data
    */
   processAPIResponse(response) {
+    console.log(`[State Manager] Processing API response in state: ${this.currentState}`, response);
+    
     // Get current state handler
     const stateHandler = conversationFlow[this.currentState];
     
@@ -104,12 +106,17 @@ export class StateManager {
     }
     
     try {
+      console.log(`[State Manager] Calling handleAPIResponse for state: ${this.currentState}`);
+      
       // Call API response handler for current state
       const result = stateHandler.handleAPIResponse(response, this.conversationData);
+      
+      console.log(`[State Manager] handleAPIResponse result:`, result);
       
       // Update conversation data
       if (result.data) {
         Object.assign(this.conversationData, result.data);
+        console.log(`[State Manager] Updated conversation data:`, this.conversationData);
       }
       
       // Save state
@@ -119,7 +126,10 @@ export class StateManager {
       
       // Transition to next state if provided
       if (result.nextState) {
+        console.log(`[State Manager] Transitioning to next state: ${result.nextState}`);
         this.transitionToState(result.nextState);
+      } else {
+        console.log(`[State Manager] No next state provided, staying in current state: ${this.currentState}`);
       }
     } catch (error) {
       console.error('Error processing API response:', error);
@@ -166,6 +176,8 @@ export class StateManager {
    * @param {string} state - State to process
    */
   processState(state) {
+    console.log(`[State Manager] Processing state: ${state}`);
+    
     // Get state handler
     const stateHandler = conversationFlow[state];
     
@@ -175,15 +187,21 @@ export class StateManager {
     }
     
     try {
+      console.log(`[State Manager] Calling enter handler for state: ${state} with data:`, this.conversationData);
+      
       // Call enter handler for state
       const result = stateHandler.enter(this.conversationData, this.config);
       
+      console.log(`[State Manager] Enter handler result for state ${state}:`, result);
+      
       // Emit state change event
+      console.log(`[State Manager] Emitting stateChange event with result:`, result);
       this.emit('stateChange', result);
       
       // Update conversation data
       if (result.data) {
         Object.assign(this.conversationData, result.data);
+        console.log(`[State Manager] Updated conversation data:`, this.conversationData);
         
         // Save state
         if (this.config.useLocalStorage) {
@@ -193,7 +211,10 @@ export class StateManager {
       
       // Transition to next state if provided
       if (result.nextState) {
+        console.log(`[State Manager] Transitioning to next state: ${result.nextState}`);
         this.transitionToState(result.nextState);
+      } else if (result.apiAction) {
+        console.log(`[State Manager] API action required: ${result.apiAction} with params:`, result.apiParams);
       }
     } catch (error) {
       console.error(`Error processing state ${state}:`, error);

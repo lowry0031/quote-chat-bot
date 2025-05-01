@@ -20,6 +20,7 @@ A customizable, embeddable chat bot for getting quotes for home cleaning service
 - [Development](#development)
 - [Testing](#testing)
 - [Customization](#customization)
+- [API Logging](#api-logging)
 - [Browser Compatibility](#browser-compatibility)
 - [License](#license)
 
@@ -40,7 +41,8 @@ Add the following code to your HTML:
   document.addEventListener('DOMContentLoaded', function() {
     CleaningQuoteBot.init({
       containerId: 'chat-container',
-      apiKey: 'YOUR_API_KEY',
+      username: 'YOUR_USERNAME',
+      password: 'YOUR_PASSWORD',
       theme: {
         primaryColor: '#4a90e2',
         secondaryColor: '#f5a623'
@@ -67,7 +69,8 @@ Add the following code to your HTML:
   document.addEventListener('DOMContentLoaded', function() {
     CleaningQuoteBot.init({
       containerId: 'chat-container',
-      apiKey: 'YOUR_API_KEY',
+      username: 'YOUR_USERNAME',
+      password: 'YOUR_PASSWORD',
       theme: {
         primaryColor: '#4a90e2',
         secondaryColor: '#f5a623'
@@ -83,7 +86,7 @@ You can also initialize the chat bot using data attributes:
 
 ```html
 <!-- Add the chat bot container -->
-<div id="chat-container" data-cqb-container data-cqb-api-key="YOUR_API_KEY" data-cqb-primary-color="#4a90e2" data-cqb-secondary-color="#f5a623"></div>
+<div id="chat-container" data-cqb-container data-cqb-username="YOUR_USERNAME" data-cqb-password="YOUR_PASSWORD" data-cqb-primary-color="#4a90e2" data-cqb-secondary-color="#f5a623"></div>
 
 <!-- Add the chat bot script -->
 <link rel="stylesheet" href="path/to/chatbot.min.css">
@@ -110,7 +113,8 @@ The chat bot can be configured with the following options:
 CleaningQuoteBot.init({
   // Required
   containerId: 'chat-container', // ID of the container element
-  apiKey: 'YOUR_API_KEY',        // MaidCentral API key
+  username: 'YOUR_USERNAME',     // MaidCentral API username
+  password: 'YOUR_PASSWORD',     // MaidCentral API password
   
   // API Configuration
   apiUrl: 'https://api.maidcentral.com', // API base URL
@@ -135,13 +139,27 @@ CleaningQuoteBot.init({
   onInit: function() {},                  // Called after initialization
   onLeadCreated: function(leadData) {},   // Called when lead is created
   onQuoteCreated: function(quoteData) {}, // Called when quote is created
-  onBookingComplete: function(bookingData) {} // Called after booking
+  onBookingComplete: function(bookingData) {}, // Called after booking
+  
+  // Advanced Configuration
+  debug: false,                        // Enable debug logging to console
+  pollingInterval: 5000,               // Polling interval for long-running operations
+  maxRetries: 3,                       // Maximum number of retry attempts
+  storagePrefix: 'cqb_',               // Prefix for localStorage keys
+  useLocalStorage: true,               // Use localStorage for state persistence
+  
+  // API Logging Configuration
+  apiLogging: {
+    enabled: false,                    // Enable API logging
+    logRequests: true,                 // Log API requests
+    logResponses: true                 // Log API responses
+  }
 });
 ```
 
 ## API Integration
 
-The chat bot integrates with the MaidCentral API to provide real-time pricing, create leads, generate quotes, and book services. You'll need a MaidCentral API key to use these features.
+The chat bot integrates with the MaidCentral API to provide real-time pricing, create leads, generate quotes, and book services. You'll need MaidCentral API credentials (username and password) to use these features.
 
 ### API Endpoints Used
 
@@ -201,7 +219,8 @@ The chat bot includes a mock API for testing without making real API calls. To u
 ```javascript
 CleaningQuoteBot.init({
   containerId: 'chat-container',
-  apiKey: 'test-api-key',
+  username: 'test-username',
+  password: 'test-password',
   useMockApi: true
 });
 ```
@@ -211,7 +230,8 @@ You can also test different scenarios:
 ```javascript
 CleaningQuoteBot.init({
   containerId: 'chat-container',
-  apiKey: 'test-api-key',
+  username: 'test-username',
+  password: 'test-password',
   useMockApi: true,
   testScenario: 'error' // Test error handling
 });
@@ -233,7 +253,8 @@ You can customize the appearance of the chat bot by setting theme options:
 ```javascript
 CleaningQuoteBot.init({
   containerId: 'chat-container',
-  apiKey: 'YOUR_API_KEY',
+  username: 'YOUR_USERNAME',
+  password: 'YOUR_PASSWORD',
   theme: {
     primaryColor: '#4a90e2',            // Primary brand color
     secondaryColor: '#f5a623',          // Secondary color
@@ -252,7 +273,8 @@ You can customize the welcome message:
 ```javascript
 CleaningQuoteBot.init({
   containerId: 'chat-container',
-  apiKey: 'YOUR_API_KEY',
+  username: 'YOUR_USERNAME',
+  password: 'YOUR_PASSWORD',
   welcomeMessage: 'Hi! Need a cleaning quote?'
 });
 ```
@@ -264,7 +286,8 @@ You can add callbacks for various events:
 ```javascript
 CleaningQuoteBot.init({
   containerId: 'chat-container',
-  apiKey: 'YOUR_API_KEY',
+  username: 'YOUR_USERNAME',
+  password: 'YOUR_PASSWORD',
   onLeadCreated: function(leadData) {
     console.log('Lead created:', leadData);
     // Track conversion in analytics
@@ -275,6 +298,44 @@ CleaningQuoteBot.init({
   }
 });
 ```
+
+## API Logging
+
+The chat bot includes an API logging feature that can be used for troubleshooting API issues. When enabled, this feature will save API request and response payloads as JSON files, which can be used to diagnose problems with the API integration.
+
+### Enabling API Logging
+
+To enable API logging, add the `apiLogging` configuration option:
+
+```javascript
+CleaningQuoteBot.init({
+  containerId: 'chat-container',
+  username: 'YOUR_USERNAME',
+  password: 'YOUR_PASSWORD',
+  apiLogging: {
+    enabled: true,           // Enable API logging
+    logRequests: true,       // Log API requests
+    logResponses: true       // Log API responses
+  }
+});
+```
+
+### Log Files
+
+When API logging is enabled, the chat bot will generate JSON log files for each API request and response. These files will be downloaded to the user's browser download folder with filenames in the following format:
+
+- `api-log-request-[action]-[timestamp].json` - API request logs
+- `api-log-response-[action]-[timestamp].json` - API response logs
+
+Each log file contains:
+- Timestamp of the request/response
+- Type (request or response)
+- API action (e.g., validatePostalCode, createLead)
+- Complete payload data
+
+### Security Considerations
+
+For security reasons, sensitive information like passwords and authentication tokens are masked in the log files.
 
 ## Browser Compatibility
 
