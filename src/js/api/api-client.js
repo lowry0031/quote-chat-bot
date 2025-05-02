@@ -270,7 +270,7 @@ export class APIClient {
    */
   async validatePostalCode(postalCode) {
     try {
-      const response = await this.request(`/api/lead/postalCodes?postalCode=${postalCode}`);
+      const response = await this.request(`/api/Lead/postalCodes?postalCode=${postalCode}`);
       
       // Transform the response to match the expected format
       // The API returns an array of postal codes, but the app expects a single object
@@ -473,7 +473,7 @@ export class APIClient {
    */
   getActionFromEndpoint(endpoint) {
     // Map endpoints to actions
-    if (endpoint.includes('/api/lead/postalCodes')) {
+    if (endpoint.includes('/api/Lead/postalCodes')) {
       return API_ACTIONS.VALIDATE_POSTAL_CODE;
     } else if (endpoint.includes('/api/Lead/ScopeGroups')) {
       return API_ACTIONS.GET_SCOPE_GROUPS;
