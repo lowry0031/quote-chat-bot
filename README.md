@@ -9,7 +9,6 @@ A customizable, embeddable chat bot for getting quotes for home cleaning service
 - **Responsive**: Works on desktop and mobile devices
 - **API Integration**: Connects to the MaidCentral API for real-time pricing and booking
 - **Conversation Flow**: Guides users through the quote process with a natural conversation flow
-- **Mock API**: Includes a mock API for testing and development
 
 ## Table of Contents
 
@@ -118,7 +117,6 @@ CleaningQuoteBot.init({
   
   // API Configuration
   apiUrl: 'https://api.maidcentral.com', // API base URL
-  useMockApi: false,                     // Use mock API for testing
   
   // UI Configuration
   theme: {
@@ -214,35 +212,13 @@ This will create minified files in the `dist` directory.
 
 ## Testing
 
-The chat bot includes a mock API for testing without making real API calls. To use the mock API:
+To test the chat bot, you can use the test page included in the repository:
 
-```javascript
-CleaningQuoteBot.init({
-  containerId: 'chat-container',
-  username: 'test-username',
-  password: 'test-password',
-  useMockApi: true
-});
+```bash
+npm run test
 ```
 
-You can also test different scenarios:
-
-```javascript
-CleaningQuoteBot.init({
-  containerId: 'chat-container',
-  username: 'test-username',
-  password: 'test-password',
-  useMockApi: true,
-  testScenario: 'error' // Test error handling
-});
-```
-
-Available test scenarios:
-
-- `default` - Normal flow
-- `error` - Error handling
-- `postalCodeValid` - Valid postal code
-- `postalCodeInvalid` - Invalid postal code
+This will start a test server and open a test page in your browser. You can use this page to test the chat bot with different configurations and scenarios.
 
 ## Customization
 
@@ -322,7 +298,7 @@ CleaningQuoteBot.init({
 
 ### Log Files
 
-When API logging is enabled, the chat bot will generate JSON log files for each API request and response. These files will be downloaded to the user's browser download folder with filenames in the following format:
+When API logging is enabled, the chat bot will generate JSON log files for each API request and response. These files will be saved to the server in the `api-logs` directory with filenames in the following format:
 
 - `api-log-request-[action]-[timestamp].json` - API request logs
 - `api-log-response-[action]-[timestamp].json` - API response logs

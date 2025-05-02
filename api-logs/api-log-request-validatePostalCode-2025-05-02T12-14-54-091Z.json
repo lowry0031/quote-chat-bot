@@ -1,0 +1,13 @@
+{
+  "timestamp": "2025-05-02T12:14:54.091Z",
+  "type": "request",
+  "action": "validatePostalCode",
+  "data": {
+    "action": "validatePostalCode",
+    "params": {
+      "postalCode": "12345"
+    },
+    "testScenario": "default",
+    "mock": true
+  }
+}

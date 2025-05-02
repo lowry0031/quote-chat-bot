@@ -59,11 +59,6 @@
             <div class="test-controls">
                 <h3>Test Controls</h3>
                 <label>
-                    <input type="checkbox" id="use-mock-api" checked> 
-                    Use Mock API
-                </label>
-                <br>
-                <label>
                     <select id="test-scenario">
                         <option value="default">Default Flow</option>
                         <option value="error">Error Handling</option>
@@ -91,7 +86,6 @@
                 window.CleaningQuoteBot.init({
                     containerId: 'chat-container',
                     apiKey: 'test-api-key',
-                    useMockApi: document.getElementById('use-mock-api').checked,
                     testScenario: document.getElementById('test-scenario').value,
                     theme: {
                         primaryColor: '#4a90e2',
@@ -100,9 +94,6 @@
                 });
                 
                 // Test control event listeners
-                document.getElementById('use-mock-api').addEventListener('change', function(e) {
-                    window.CleaningQuoteBot.setOption('useMockApi', e.target.checked);
-                });
                 
                 document.getElementById('test-scenario').addEventListener('change', function(e) {
                     window.CleaningQuoteBot.setOption('testScenario', e.target.value);

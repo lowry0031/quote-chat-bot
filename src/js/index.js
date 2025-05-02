@@ -22,11 +22,6 @@ window.CleaningQuoteBot = (() => {
     try {
       console.log('[CleaningQuoteBot] Initializing with config:', config);
       
-      // Ensure useMockApi is set to true for debugging
-      if (!config.useMockApi) {
-        console.log('[CleaningQuoteBot] Enabling mock API for debugging');
-        config.useMockApi = true;
-      }
       
       // Ensure debug is set to true
       if (!config.debug) {

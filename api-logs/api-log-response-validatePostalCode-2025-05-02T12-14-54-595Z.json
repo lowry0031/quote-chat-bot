@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-05-02T12:14:54.595Z",
+  "type": "response",
+  "action": "validatePostalCode",
+  "data": {
+    "IsSuccess": true,
+    "Message": null,
+    "Result": {
+      "IsValid": true,
+      "IsServiceAvailable": true,
+      "Region": "CA",
+      "City": "Anytown",
+      "ServiceRegionId": 5,
+      "ServiceRegionName": "West Coast",
+      "PricingAdjustment": 0,
+      "MinimumHours": 3,
+      "Notes": "This area requires a minimum of 3 hours per service"
+    },
+    "InnerException": null,
+    "StatusCode": 200
+  }
+}

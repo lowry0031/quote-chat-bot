@@ -5,7 +5,6 @@
 
 import { createEventEmitter, logApiData } from '../utils/helpers.js';
 import { API_ACTIONS } from '../utils/config.js';
-import { mockAPI } from './mock-api.js';
 
 export class APIClient {
   /**
@@ -39,12 +38,6 @@ export class APIClient {
    */
   async executeAction(action, params, retryCount = 0) {
     try {
-      // If using mock API, use that instead
-      if (this.config.useMockApi) {
-        this.handleMockAPI(action, params);
-        return;
-      }
-      
       // Make sure we have a token
       await this.ensureToken();
       
@@ -106,55 +99,6 @@ export class APIClient {
     }
   }
   
-  /**
-   * Handle mock API requests
-   * @param {string} action - API action to execute
-   * @param {Object} params - Parameters for the action
-   */
-  async handleMockAPI(action, params) {
-    try {
-      console.log(`[API Client] Handling mock API call for action: ${action}`, params);
-      
-      // Log request
-      const requestData = {
-        action,
-        params,
-        testScenario: this.config.testScenario,
-        mock: true
-      };
-      logApiData('request', action, requestData, this.config);
-      
-      // Get mock response
-      const response = await mockAPI(action, params, this.config.testScenario);
-      
-      // Log response
-      console.log(`[API Client] Mock API response received for action: ${action}`, response);
-      logApiData('response', action, response, this.config);
-      
-      // Emit response event
-      console.log(`[API Client] Emitting response event for action: ${action}`);
-      console.log(`[API Client] Response data:`, response);
-      
-      // Check if response is valid
-      if (!response || !response.Result) {
-        console.error(`[API Client] Invalid response for action ${action}:`, response);
-        this.emit('error', new Error(`Invalid API response for action ${action}`));
-        return;
-      }
-      
-      // Verify event listeners
-      console.log(`[API Client] Event listeners for 'response':`, this._events ? this._events.response : 'No events property');
-      
-      // Emit response event
-      this.emit('response', response);
-      
-      // Verify the response was emitted
-      console.log(`[API Client] Response event emitted for action: ${action}`);
-    } catch (error) {
-      console.error(`Error with mock API for action ${action}:`, error);
-      this.emit('error', error);
-    }
-  }
   
   /**
    * Ensure we have a valid token
@@ -178,6 +122,9 @@ export class APIClient {
       // For backward compatibility, use apiKey if username/password not provided
       const username = this.config.username || this.config.apiKey;
       const password = this.config.password || this.config.apiKey;
+
+      console.log('Username:', username);
+      console.log('Password:', password);
       
       if (!username || !password) {
         throw new Error('Authentication failed: No username/password or apiKey provided');

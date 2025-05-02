@@ -2,6 +2,13 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
+// Create api-logs directory if it doesn't exist
+const API_LOGS_DIR = path.join(__dirname, 'api-logs');
+if (!fs.existsSync(API_LOGS_DIR)) {
+  fs.mkdirSync(API_LOGS_DIR, { recursive: true });
+  console.log(`Created API logs directory: ${API_LOGS_DIR}`);
+}
+
 const PORT = 8080;
 
 const MIME_TYPES = {
@@ -21,10 +28,65 @@ const MIME_TYPES = {
   '.otf': 'font/otf'
 };
 
+// Helper function to read request body
+const readRequestBody = (req) => {
+  return new Promise((resolve, reject) => {
+    let body = '';
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+    req.on('end', () => {
+      try {
+        resolve(JSON.parse(body));
+      } catch (error) {
+        reject(error);
+      }
+    });
+    req.on('error', (error) => {
+      reject(error);
+    });
+  });
+};
+
 const server = http.createServer((req, res) => {
   console.log(`Request: ${req.method} ${req.url}`);
   
-  // Handle root URL
+  // Handle API log endpoint
+  if (req.method === 'POST' && req.url === '/api/log') {
+    readRequestBody(req)
+      .then(data => {
+        const { filename, content } = data;
+        
+        // Validate filename to prevent directory traversal
+        const sanitizedFilename = path.basename(filename);
+        const filePath = path.join(API_LOGS_DIR, sanitizedFilename);
+        
+        // Write the file
+        fs.writeFile(filePath, content, (err) => {
+          if (err) {
+            console.error(`Error writing log file: ${err.message}`);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, error: err.message }));
+          } else {
+            console.log(`API log saved to: ${filePath}`);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ 
+              success: true, 
+              path: filePath,
+              message: 'Log file saved successfully' 
+            }));
+          }
+        });
+      })
+      .catch(error => {
+        console.error(`Error processing request: ${error.message}`);
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, error: error.message }));
+      });
+    return;
+  }
+  
+  // Handle static files
   let filePath = req.url === '/' ? './index.html' : '.' + req.url;
   
   // Get file extension

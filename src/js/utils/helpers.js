@@ -261,31 +261,33 @@ export function logApiData(type, action, data, config) {
     // Create filename
     const filename = `api-log-${type}-${action}-${formattedTimestamp}.json`;
     
-    // Create a blob with the data
-    const blob = new Blob([jsonContent], { type: 'application/json' });
+    // Send the log data to the server to save
+    fetch('/api/log', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        filename,
+        content: jsonContent
+      })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(result => {
+      // Log to console if debug is enabled
+      if (config.debug) {
+        console.log(`API ${type} logged to ${result.path}`);
+      }
+    })
+    .catch(error => {
+      console.error(`Error saving API log to server:`, error);
+    });
     
-    // Create a URL for the blob
-    const url = URL.createObjectURL(blob);
-    
-    // Create a link element
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    
-    // Append to the document
-    document.body.appendChild(link);
-    
-    // Trigger the download
-    link.click();
-    
-    // Clean up
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    
-    // Log to console if debug is enabled
-    if (config.debug) {
-      console.log(`API ${type} logged to ${filename}`);
-    }
   } catch (error) {
     console.error(`Error logging API ${type}:`, error);
   }

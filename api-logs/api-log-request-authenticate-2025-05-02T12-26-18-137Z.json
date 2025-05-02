@@ -1,0 +1,17 @@
+{
+  "timestamp": "2025-05-02T12:26:18.137Z",
+  "type": "request",
+  "action": "authenticate",
+  "data": {
+    "url": "https://api.maidcentral.net/token",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "body": {
+      "username": "test-username",
+      "password": "********",
+      "grant_type": "password"
+    }
+  }
+}

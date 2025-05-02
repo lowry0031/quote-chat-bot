@@ -6,8 +6,8 @@
 export const defaultConfig = {
   // API Configuration
   apiKey: null, // Deprecated: Use username and password instead
-  username: null,
-  password: null,
+  username: 'MC.d73b8216c04b51899f0c037f6422ed35',
+  password: 'b93ca66fe45a4fc3aa374689368b',
   apiUrl: 'https://api.maidcentral.net',
   useMockApi: false,
   
@@ -45,7 +45,7 @@ export const defaultConfig = {
   
   // API Logging Configuration
   apiLogging: {
-    enabled: false,
+    enabled: true,
     logDirectory: './api-logs',
     logRequests: true,
     logResponses: true,
