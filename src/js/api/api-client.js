@@ -132,9 +132,10 @@ export class APIClient {
       
       // Use proxy URL if we're running locally
       const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      const baseUrl = isLocalhost ? '/proxy/api' : this.config.apiUrl;
       
-      const url = `${baseUrl}/token`;
+      // For token endpoint, we need to use the full proxy path
+      const baseUrl = isLocalhost ? '/proxy' : this.config.apiUrl;
+      const url = `${baseUrl}/api/token`;
       const requestBody = new URLSearchParams({
         username,
         password,
@@ -208,9 +209,13 @@ export class APIClient {
     try {
       // Use proxy URL if we're running locally
       const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      const baseUrl = isLocalhost ? '/proxy/api' : this.config.apiUrl;
       
+      // For local development, we need to handle the URL construction differently
+      // The proxy expects the full path including /api
+      const baseUrl = isLocalhost ? '/proxy' : this.config.apiUrl;
       const url = `${baseUrl}${endpoint}`;
+      
+      console.log(`Making API request to: ${url}`);
       
       const options = {
         method,
@@ -270,7 +275,7 @@ export class APIClient {
    */
   async validatePostalCode(postalCode) {
     try {
-      const response = await this.request(`/api/Lead/postalCodes?postalCode=${postalCode}`);
+      const response = await this.request(`/api/Lead/postalCodes`);
       
       // Transform the response to match the expected format
       // The API returns an array of postal codes, but the app expects a single object

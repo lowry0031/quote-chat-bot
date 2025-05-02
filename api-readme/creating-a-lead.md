@@ -13,7 +13,7 @@ sequenceDiagram
     API-->>Client: Access Token
     
     Note over Client,API: Optional Step
-    Client->>API: GET /api/lead/postalCodes?postalCode={code}
+    Client->>API: GET /api/lead/postalCodes
     API-->>Client: Postal Code Validation
     
     Client->>API: POST /api/Lead/CreateOrUpdate
@@ -54,7 +54,7 @@ Response:
 Before creating a lead, you can validate the postal code to ensure it's valid and that service is available in that area:
 
 ```bash
-curl -X GET "https://api.maidcentral.com/api/lead/postalCodes?postalCode=12345" \
+curl -X GET "https://api.maidcentral.com/api/lead/postalCodes" \
   -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
 ```
 
