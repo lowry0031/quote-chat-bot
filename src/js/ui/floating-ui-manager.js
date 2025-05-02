@@ -642,41 +642,49 @@ export class FloatingUIManager {
    * @param {Object} stateData - State data
    */
   updateFromState(stateData) {
+    console.log('[FloatingUIManager] updateFromState called with:', stateData);
     // Hide typing indicator
     this.hideTypingIndicator();
-    
+
     // Add bot message if available
     if (stateData.message) {
+      console.log('[FloatingUIManager] Adding bot message:', stateData.message);
       this.addMessage(stateData.message, 'bot');
     }
-    
+
     // Add options if available
     if (stateData.options) {
+      console.log('[FloatingUIManager] Adding options:', stateData.options);
       this.addOptions(stateData.options);
     }
-    
+
     // Add form if available
     if (stateData.form) {
+      console.log('[FloatingUIManager] Adding form:', stateData.form);
       this.addForm(stateData.form);
     }
-    
+
     // Add date picker if available
     if (stateData.dates) {
+      console.log('[FloatingUIManager] Adding date picker:', stateData.dates);
       this.addDatePicker(stateData.dates);
     }
-    
+
     // Add pricing if available
     if (stateData.pricing) {
+      console.log('[FloatingUIManager] Adding pricing:', stateData.pricing);
       this.addPricing(stateData.pricing);
     }
-    
+
     // Add summary if available
     if (stateData.summary) {
+      console.log('[FloatingUIManager] Adding summary:', stateData.summary);
       this.addSummary(stateData.summary);
     }
-    
+
     // Update input area based on input type
     if (stateData.inputType) {
+      console.log('[FloatingUIManager] Updating input area for inputType:', stateData.inputType);
       this.updateInputArea(stateData.inputType);
     }
   }

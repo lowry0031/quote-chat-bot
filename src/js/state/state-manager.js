@@ -95,44 +95,47 @@ export class StateManager {
    * @param {Object} response - API response data
    */
   processAPIResponse(response) {
-    console.log(`[State Manager] Processing API response in state: ${this.currentState}`, response);
-    
+    console.log('[StateManager] processAPIResponse called with:', response, 'Current state:', this.currentState);
+
     // Get current state handler
     const stateHandler = conversationFlow[this.currentState];
-    
     if (!stateHandler || !stateHandler.handleAPIResponse) {
-      console.error(`No API response handler for state: ${this.currentState}`);
+      console.error(`[StateManager] No API response handler for state: ${this.currentState}`);
       return;
     }
-    
+
     try {
-      console.log(`[State Manager] Calling handleAPIResponse for state: ${this.currentState}`);
-      
+      console.log(`[StateManager] Calling handleAPIResponse for state: ${this.currentState}`);
       // Call API response handler for current state
       const result = stateHandler.handleAPIResponse(response, this.conversationData);
-      
-      console.log(`[State Manager] handleAPIResponse result:`, result);
-      
+      console.log('[StateManager] handleAPIResponse result:', result);
+
       // Update conversation data
       if (result.data) {
         Object.assign(this.conversationData, result.data);
-        console.log(`[State Manager] Updated conversation data:`, this.conversationData);
+        console.log('[StateManager] Updated conversation data:', this.conversationData);
       }
-      
+
       // Save state
       if (this.config.useLocalStorage) {
+        console.log('[StateManager] Saving state to localStorage');
         this.saveState();
       }
-      
+
       // Transition to next state if provided
       if (result.nextState) {
-        console.log(`[State Manager] Transitioning to next state: ${result.nextState}`);
+        console.log(`[StateManager] Transitioning to next state: ${result.nextState}`);
         this.transitionToState(result.nextState);
       } else {
-        console.log(`[State Manager] No next state provided, staying in current state: ${this.currentState}`);
+        console.log(`[StateManager] No next state provided, staying in current state: ${this.currentState}`);
+        // Explicitly update the UI with the current state data
+        if (this.controller && typeof this.controller.handleStateChange === 'function') {
+          console.log('[StateManager] Triggering UI update with current state data');
+          this.controller.handleStateChange(this.getStateData());
+        }
       }
     } catch (error) {
-      console.error('Error processing API response:', error);
+      console.error('[StateManager] Error processing API response:', error);
       this.handleError(error);
     }
   }

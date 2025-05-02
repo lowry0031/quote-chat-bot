@@ -113,17 +113,17 @@ export class Controller {
    * @param {Object} stateData - New state data
    */
   handleStateChange(stateData) {
-    console.log(`[Controller] Handling state change:`, stateData);
-    
+    console.log('[Controller] handleStateChange called with:', stateData);
     // Update UI based on state change
+    console.log('[Controller] Updating UI with stateData');
     this.ui.updateFromState(stateData);
-    
+
     // Make API calls if needed
     if (stateData.apiAction) {
       console.log(`[Controller] Executing API action: ${stateData.apiAction} with params:`, stateData.apiParams);
       this.api.executeAction(stateData.apiAction, stateData.apiParams);
     } else {
-      console.log(`[Controller] No API action to execute`);
+      console.log('[Controller] No API action to execute');
     }
   }
   
@@ -132,11 +132,10 @@ export class Controller {
    * @param {Object} response - API response data
    */
   handleAPIResponse(response) {
-    console.log(`[Controller] Received API response:`, response);
-    
-    // Process API response through state manager
-    console.log(`[Controller] Forwarding API response to state manager`);
-    this.state.processAPIResponse(response);
+    console.log('[Controller] handleAPIResponse called with:', response);
+    const result = this.state.processAPIResponse(response);
+    console.log('[Controller] StateManager.processAPIResponse result:', result);
+    return result;
   }
   
   /**
