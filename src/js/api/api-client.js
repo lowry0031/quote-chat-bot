@@ -133,9 +133,9 @@ export class APIClient {
       // Use proxy URL if we're running locally
       const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
       
-      // For token endpoint, we need to use the full proxy path
-      const baseUrl = isLocalhost ? '/proxy' : this.config.apiUrl;
-      const url = `${baseUrl}/api/token`;
+      // For token endpoint, we need to use the /proxy/api path locally
+      const baseUrl = isLocalhost ? '/proxy/api' : this.config.apiUrl;
+      const url = `${baseUrl}/token`;
       const requestBody = new URLSearchParams({
         username,
         password,
@@ -212,8 +212,9 @@ export class APIClient {
       
       // For local development, we need to handle the URL construction differently
       // The proxy expects the full path including /api
-      const baseUrl = isLocalhost ? '/proxy' : this.config.apiUrl;
-      const url = `${baseUrl}${endpoint}`;
+      let baseUrl = isLocalhost ? '/proxy/api' : this.config.apiUrl;
+      let url = `${baseUrl}${endpoint}`;
+      // Always use /proxy/api for local requests, as the server only proxies /proxy/api/*
       
       console.log(`Making API request to: ${url}`);
       
@@ -221,11 +222,11 @@ export class APIClient {
         method,
         headers: {
           'Authorization': `Bearer ${this.token}`,
-          'Content-Type': 'application/json'
         }
       };
-      
+      // Only set Content-Type and body for POST/PUT with data
       if (data && (method === 'POST' || method === 'PUT')) {
+        options.headers['Content-Type'] = 'application/json';
         options.body = JSON.stringify(data);
       }
       
@@ -275,7 +276,7 @@ export class APIClient {
    */
   async validatePostalCode(postalCode) {
     try {
-      const response = await this.request(`/api/Lead/postalCodes`);
+      const response = await this.request(`/api/Lead/PostalCodes`);
       
       // Transform the response to match the expected format
       // The API returns an array of postal codes, but the app expects a single object
@@ -478,7 +479,7 @@ export class APIClient {
    */
   getActionFromEndpoint(endpoint) {
     // Map endpoints to actions
-    if (endpoint.includes('/api/Lead/postalCodes')) {
+    if (endpoint.includes('/api/Lead/PostalCodes')) {
       return API_ACTIONS.VALIDATE_POSTAL_CODE;
     } else if (endpoint.includes('/api/Lead/ScopeGroups')) {
       return API_ACTIONS.GET_SCOPE_GROUPS;
