@@ -239,6 +239,8 @@ export class APIClient {
       const response = await fetch(url, options);
       
       if (!response.ok) {
+        console.error(`API request failed`);
+        console.error(response);
         // Handle specific error codes
         if (response.status === 401 || response.status === 403) {
           // Authentication or authorization error

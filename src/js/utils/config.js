@@ -23,7 +23,7 @@ export const defaultConfig = {
   },
   
   // Behavior Configuration
-  autoOpen: false,
+  autoOpen: false, // Start minimized by default
   welcomeMessage: 'Hi! I can help you get a quote for our cleaning services. To get started, please enter your postal code.',
   inputPlaceholder: 'Type your response...',
   

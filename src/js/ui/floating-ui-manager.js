@@ -1,19 +1,20 @@
 /**
- * Cleaning Service Quote Bot - UI Manager
- * This file handles the user interface for the chat bot
+ * Cleaning Service Quote Bot - Floating UI Manager
+ * This file handles the floating chat bot user interface
  */
 
 import { createEventEmitter, debounce } from '../utils/helpers.js';
 import { INPUT_TYPES } from '../utils/config.js';
 
-export class UIManager {
+export class FloatingUIManager {
   /**
-   * Create a new UIManager instance
+   * Create a new FloatingUIManager instance
    * @param {Object} config - Configuration options
    */
   constructor(config) {
     this.config = config;
     this.container = null;
+    this.chatIcon = null;
     this.elements = {};
     this.isMinimized = true; // Start minimized by default
     this.isTyping = false;
@@ -31,6 +32,8 @@ export class UIManager {
     this.handleDateSelect = this.handleDateSelect.bind(this);
     this.scrollToBottom = debounce(this.scrollToBottom.bind(this), 100);
     this.toggleChat = this.toggleChat.bind(this);
+    this.open = this.open.bind(this);
+    this.minimize = this.minimize.bind(this);
   }
   
   /**
@@ -62,12 +65,6 @@ export class UIManager {
     
     // Start minimized by default
     this.minimize();
-    
-    // Position the container in the bottom right corner
-    this.container.style.position = 'fixed';
-    this.container.style.bottom = '20px';
-    this.container.style.right = '20px';
-    this.container.style.zIndex = '9998';
   }
   
   /**
@@ -84,26 +81,31 @@ export class UIManager {
       </svg>
     `;
     
-    // Add click event listener with proper binding
-    const self = this;
-    chatIcon.addEventListener('click', function() {
-      self.toggleChat();
-    });
+    // Position the chat icon in the bottom right corner
+    chatIcon.style.position = 'fixed';
+    chatIcon.style.bottom = '20px';
+    chatIcon.style.right = '20px';
+    chatIcon.style.width = '60px';
+    chatIcon.style.height = '60px';
+    chatIcon.style.borderRadius = '50%';
+    chatIcon.style.backgroundColor = this.config.theme.primaryColor;
+    chatIcon.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+    chatIcon.style.display = 'flex';
+    chatIcon.style.justifyContent = 'center';
+    chatIcon.style.alignItems = 'center';
+    chatIcon.style.cursor = 'pointer';
+    chatIcon.style.zIndex = '9999';
+    chatIcon.style.transition = 'all 0.3s ease';
+    
+    // Add click event listener
+    chatIcon.addEventListener('click', this.open);
     
     // Add to body
     document.body.appendChild(chatIcon);
     
     // Store reference
+    this.chatIcon = chatIcon;
     this.elements.chatIcon = chatIcon;
-    
-    // Initially show the chat icon
-    this.elements.chatIcon.style.display = 'flex';
-    
-    // Ensure the chat icon is positioned in the bottom right corner
-    chatIcon.style.position = 'fixed';
-    chatIcon.style.bottom = '20px';
-    chatIcon.style.right = '20px';
-    chatIcon.style.zIndex = '9999';
   }
   
   /**
@@ -115,6 +117,22 @@ export class UIManager {
     
     // Set container class
     this.container.classList.add('cqb-container');
+    
+    // Position the container in the bottom right corner
+    this.container.style.position = 'fixed';
+    this.container.style.bottom = '20px';
+    this.container.style.right = '20px';
+    this.container.style.width = '350px';
+    this.container.style.height = '500px';
+    this.container.style.maxHeight = '80vh';
+    this.container.style.backgroundColor = '#ffffff';
+    this.container.style.borderRadius = '8px';
+    this.container.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+    this.container.style.display = 'flex';
+    this.container.style.flexDirection = 'column';
+    this.container.style.overflow = 'hidden';
+    this.container.style.zIndex = '9998';
+    this.container.style.transition = 'all 0.3s ease';
     
     // Create header
     const header = document.createElement('div');
@@ -143,15 +161,16 @@ export class UIManager {
     this.container.appendChild(messagesArea);
     this.container.appendChild(inputArea);
     
-    // Store references to elements (preserving chatIcon reference)
-    Object.assign(this.elements, {
-      header,
-      messagesArea,
-      inputArea,
-      input: inputArea.querySelector('.cqb-input'),
-      sendButton: inputArea.querySelector('.cqb-send-button'),
-      minimizeButton: header.querySelector('.cqb-minimize-button')
-    });
+    // Store references to elements
+    this.elements.header = header;
+    this.elements.messagesArea = messagesArea;
+    this.elements.inputArea = inputArea;
+    this.elements.input = inputArea.querySelector('.cqb-input');
+    this.elements.sendButton = inputArea.querySelector('.cqb-send-button');
+    this.elements.minimizeButton = header.querySelector('.cqb-minimize-button');
+    
+    // Initially hide the container
+    this.container.style.display = 'none';
   }
   
   /**
@@ -160,44 +179,40 @@ export class UIManager {
   applyTheme() {
     const { theme } = this.config;
     
-    // Create CSS variables
-    const cssVars = {
-      '--cqb-primary-color': theme.primaryColor,
-      '--cqb-secondary-color': theme.secondaryColor,
-      '--cqb-font-family': theme.fontFamily,
-      '--cqb-font-size': theme.fontSize,
-      '--cqb-border-radius': theme.borderRadius,
-      '--cqb-shadow': theme.boxShadow
-    };
+    // Apply theme to chat icon
+    if (this.chatIcon) {
+      this.chatIcon.style.backgroundColor = theme.primaryColor;
+    }
     
-    // Apply CSS variables to container
-    Object.entries(cssVars).forEach(([key, value]) => {
-      this.container.style.setProperty(key, value);
-    });
+    // Apply theme to header
+    if (this.elements.header) {
+      this.elements.header.style.backgroundColor = theme.primaryColor;
+      this.elements.header.style.color = '#ffffff';
+    }
+    
+    // Apply theme to send button
+    if (this.elements.sendButton) {
+      this.elements.sendButton.style.backgroundColor = theme.primaryColor;
+      this.elements.sendButton.style.color = '#ffffff';
+    }
   }
   
   /**
    * Add event listeners to UI elements
    */
   addEventListeners() {
-    const self = this;
-    
     // Send button click
-    this.elements.sendButton.addEventListener('click', function() {
-      self.handleUserInput();
-    });
+    this.elements.sendButton.addEventListener('click', this.handleUserInput);
     
     // Input keypress (Enter)
     this.elements.input.addEventListener('keypress', (event) => {
       if (event.key === 'Enter') {
-        self.handleUserInput();
+        this.handleUserInput();
       }
     });
     
     // Minimize button click
-    this.elements.minimizeButton.addEventListener('click', function() {
-      self.minimize();
-    });
+    this.elements.minimizeButton.addEventListener('click', this.minimize);
   }
   
   /**
@@ -697,28 +712,21 @@ export class UIManager {
     // Update minimized flag
     this.isMinimized = false;
     
-    // Show container and hide chat icon
+    // Show container
     this.container.style.display = 'flex';
     
-    // Hide the chat icon
-    if (this.elements.chatIcon) {
-      this.elements.chatIcon.style.display = 'none';
+    // Hide chat icon
+    if (this.chatIcon) {
+      this.chatIcon.style.display = 'none';
     }
-    
-    // Show messages area and input area
-    this.elements.messagesArea.style.display = 'flex';
-    this.elements.inputArea.style.display = 'flex';
-    
-    // Update minimize button text
-    this.elements.minimizeButton.textContent = '−';
-    
-    // Scroll to bottom
-    this.scrollToBottom();
     
     // Focus on input
     if (this.elements.input) {
       this.elements.input.focus();
     }
+    
+    // Scroll to bottom
+    this.scrollToBottom();
   }
   
   /**
@@ -734,11 +742,9 @@ export class UIManager {
     this.container.style.display = 'none';
     
     // Show chat icon
-    const chatIcon = this.elements.chatIcon;
-    if (chatIcon) {
-      chatIcon.style.display = 'flex';
+    if (this.chatIcon) {
+      this.chatIcon.style.display = 'flex';
     } else {
-      console.error('Chat icon element not found');
       // Create the chat icon if it doesn't exist
       this.createChatIcon();
     }

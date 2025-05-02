@@ -45,6 +45,13 @@
         
         .sidebar {
             padding: 1rem;
+            min-height: 600px; /* Ensure enough height for the chat bot */
+        }
+        
+        /* Ensure the chat container has proper dimensions */
+        #chat-container {
+            width: 100%;
+            height: 500px;
         }
         
         h1, h2, h3 {
@@ -164,9 +171,7 @@
             <div class="sidebar">
                 <h3>Get a Quote</h3>
                 <p>Use our chat bot to get an instant quote for our cleaning services. Just answer a few questions about your home and we'll provide you with a personalized quote.</p>
-                
-                <!-- Chat bot container -->
-                <div id="chat-container"></div>
+                <p>Click the chat icon in the bottom right corner to start a conversation.</p>
             </div>
         </div>
     </main>
@@ -174,6 +179,9 @@
     <footer>
         <p>&copy; 2025 Cleaning Service. All rights reserved.</p>
     </footer>
+    
+    <!-- Chat bot container -->
+    <div id="chat-container"></div>
     
     <!-- Include the chat bot script -->
     <script src="src/js/index.js" type="module"></script>
@@ -184,6 +192,7 @@
                 window.CleaningQuoteBot.init({
                     containerId: 'chat-container',
                     debug: true,
+                    autoOpen: false, // Start minimized
                     theme: {
                         primaryColor: '#4a90e2',
                         secondaryColor: '#f5a623'
@@ -194,6 +203,11 @@
                         logResponses: true
                     }
                 });
+                
+                // Ensure the chat bot starts minimized
+                setTimeout(function() {
+                    window.CleaningQuoteBot.minimize();
+                }, 300);
             }
         });
     </script>

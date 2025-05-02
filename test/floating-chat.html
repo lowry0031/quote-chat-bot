@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Chat Bot Demo</title>
+    <link rel="stylesheet" href="../src/css/chatbot.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        header {
+            background-color: #4a90e2;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        h1, h2, h3 {
+            color: #4a90e2;
+        }
+        
+        footer {
+            background-color: #f5f5f5;
+            padding: 1rem 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Floating Chat Bot Demo</h1>
+        <p>Click the chat icon in the bottom right corner to start a conversation</p>
+    </header>
+    
+    <main>
+        <h2>Test Page</h2>
+        <p>This is a simple test page to demonstrate the floating chat bot functionality.</p>
+        <p>The chat bot should appear as a floating icon in the bottom right corner of the screen.</p>
+        <p>Click the icon to open the chat interface, and click the minimize button to close it.</p>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Cleaning Service. All rights reserved.</p>
+    </footer>
+    
+    <!-- Chat bot container -->
+    <div id="chat-container"></div>
+    
+    <!-- Include the chat bot script -->
+    <script src="../src/js/index.js" type="module"></script>
+    <script>
+        // Initialize the chat bot
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.CleaningQuoteBot) {
+                window.CleaningQuoteBot.init({
+                    containerId: 'chat-container',
+                    debug: true,
+                    autoOpen: false, // Start minimized
+                    theme: {
+                        primaryColor: '#4a90e2',
+                        secondaryColor: '#f5a623'
+                    }
+                });
+                
+                // Force minimize after initialization
+                setTimeout(function() {
+                    console.log('Forcing minimize');
+                    window.CleaningQuoteBot.minimize();
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>

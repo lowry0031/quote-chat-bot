@@ -3,7 +3,7 @@
  * This file coordinates between UI, state management, and API client
  */
 
-import { UIManager } from './ui/ui-manager.js';
+import { FloatingUIManager } from './ui/floating-ui-manager.js';
 import { StateManager } from './state/state-manager.js';
 import { APIClient } from './api/api-client.js';
 import { defaultConfig } from './utils/config.js';
@@ -21,7 +21,7 @@ export class Controller {
     // Initialize components
     this.api = new APIClient(this.config);
     this.state = new StateManager(this.config);
-    this.ui = new UIManager(this.config);
+    this.ui = new FloatingUIManager(this.config);
     
     // Bind methods
     this.handleUserInput = this.handleUserInput.bind(this);
@@ -48,6 +48,14 @@ export class Controller {
     
     // Start conversation
     this.state.startConversation();
+    
+    // Ensure the chat bot starts minimized if autoOpen is false
+    if (!this.config.autoOpen) {
+      // Use setTimeout to ensure the UI is fully initialized before minimizing
+      setTimeout(() => {
+        this.minimize();
+      }, 100);
+    }
   }
   
   /**
