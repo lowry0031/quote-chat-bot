@@ -4,7 +4,8 @@
   "description": "A customizable, embeddable chat bot for getting quotes for home cleaning services",
   "main": "dist/chatbot.min.js",
   "scripts": {
-    "start": "http-server -o",
+    "start": "node server.js",
+    "start:static": "http-server -o",
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -130,7 +130,11 @@ export class APIClient {
         throw new Error('Authentication failed: No username/password or apiKey provided');
       }
       
-      const url = `${this.config.apiUrl}/token`;
+      // Use proxy URL if we're running locally
+      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const baseUrl = isLocalhost ? '/proxy/api' : this.config.apiUrl;
+      
+      const url = `${baseUrl}/token`;
       const requestBody = new URLSearchParams({
         username,
         password,
@@ -202,7 +206,11 @@ export class APIClient {
    */
   async request(endpoint, method = 'GET', data = null) {
     try {
-      const url = `${this.config.apiUrl}${endpoint}`;
+      // Use proxy URL if we're running locally
+      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const baseUrl = isLocalhost ? '/proxy/api' : this.config.apiUrl;
+      
+      const url = `${baseUrl}${endpoint}`;
       
       const options = {
         method,
@@ -261,7 +269,38 @@ export class APIClient {
   async validatePostalCode(postalCode) {
     try {
       const response = await this.request(`/api/lead/postalCodes?postalCode=${postalCode}`);
-      this.emit('response', response);
+      
+      // Transform the response to match the expected format
+      // The API returns an array of postal codes, but the app expects a single object
+      const transformedResponse = { ...response };
+      
+      // Find the matching postal code in the result array
+      const matchingPostalCode = response.Result.find(pc => pc.PostalCode === postalCode);
+      
+      if (matchingPostalCode) {
+        // Transform the response to match the expected format
+        transformedResponse.Result = {
+          IsValid: true,
+          IsServiceAvailable: true, // We consider it available if it's in the list
+          PostalCode: matchingPostalCode.PostalCode,
+          ZoneName: matchingPostalCode.ZoneName,
+          ZoneId: matchingPostalCode.ZoneId,
+          City: matchingPostalCode.City || "Your city", // Default if not provided
+          Region: matchingPostalCode.Region || matchingPostalCode.ZoneName, // Use ZoneName as fallback
+          Notes: matchingPostalCode.Notes || ""
+        };
+      } else {
+        // If postal code not found in the list, it's not available
+        transformedResponse.Result = {
+          IsValid: true, // It's a valid format, just not serviced
+          IsServiceAvailable: false,
+          PostalCode: postalCode,
+          Notes: "This postal code is not in our service area."
+        };
+      }
+      
+      console.log('Transformed postal code response:', transformedResponse);
+      this.emit('response', transformedResponse);
     } catch (error) {
       // Check if this is an authentication error
       if (error.message.includes('Authentication failed') || error.message.includes('permission')) {

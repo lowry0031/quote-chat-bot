@@ -144,7 +144,8 @@ export const conversationFlow = {
       if (!data.scopeGroups) {
         return {
           message: "Let me find the available services for you...",
-          inputType: null
+          inputType: null,
+          apiAction: API_ACTIONS.GET_SCOPE_GROUPS
         };
       }
       
@@ -205,7 +206,11 @@ export const conversationFlow = {
       if (!data.questions) {
         return {
           message: "I need to ask a few questions about your home to provide an accurate quote...",
-          inputType: null
+          inputType: null,
+          apiAction: API_ACTIONS.GET_QUESTIONS,
+          apiParams: { 
+            scopeIds: data.selectedService.scopes.map(scope => scope.ScopeId) 
+          }
         };
       }
       
@@ -276,10 +281,23 @@ export const conversationFlow = {
   
   // Pricing calculation state
   [STATES.PRICING_CALCULATION]: {
-    enter: () => {
+    enter: (data) => {
       return {
         message: "I'm calculating your quote based on the information you provided...",
-        inputType: null
+        inputType: null,
+        apiAction: API_ACTIONS.GET_PRICING,
+        apiParams: {
+          ScopeGroupId: data.selectedService.id,
+          PostalCode: data.postalCode,
+          ScopesOfWork: data.selectedService.scopes.map(scope => ({
+            ScopeOfWorkId: scope.ScopeId,
+            Frequency: scope.Frequencies[0].FrequencyId
+          })),
+          Questions: Object.entries(data.homeDetails).map(([id, answer]) => ({
+            QuestionId: parseInt(id),
+            Answer: answer.toString()
+          }))
+        }
       };
     },
     handleInput: (input, data) => {
@@ -513,10 +531,22 @@ export const conversationFlow = {
   
   // Lead creation state
   [STATES.LEAD_CREATION]: {
-    enter: () => {
+    enter: (data) => {
       return {
         message: "Creating your account...",
-        inputType: null
+        inputType: null,
+        apiAction: API_ACTIONS.CREATE_LEAD,
+        apiParams: {
+          FirstName: data.contactInfo.firstName,
+          LastName: data.contactInfo.lastName,
+          Email: data.contactInfo.email,
+          Phone: data.contactInfo.phone,
+          PostalCode: data.postalCode,
+          SendLeadEmail: true,
+          AddToCampaigns: true,
+          TriggerWebhook: true,
+          Notes: `Interested in ${data.selectedService.name}`
+        }
       };
     },
     handleInput: (input, data) => {
@@ -557,10 +587,30 @@ export const conversationFlow = {
   
   // Quote creation state
   [STATES.QUOTE_CREATION]: {
-    enter: () => {
+    enter: (data) => {
       return {
         message: "Creating your quote...",
-        inputType: null
+        inputType: null,
+        apiAction: API_ACTIONS.CREATE_QUOTE,
+        apiParams: {
+          LeadId: data.leadId,
+          HomeAddress1: '',
+          HomeCity: data.postalCodeData.City,
+          HomeRegion: data.postalCodeData.Region,
+          HomePostalCode: data.postalCode,
+          SendQuoteEmail: true,
+          AddToCampaigns: true,
+          TriggerWebhook: true,
+          ScopeGroupId: data.selectedService.id,
+          ScopesOfWork: data.pricingOptions.map(option => ({
+            ScopeOfWorkId: option.scopeId,
+            Frequency: option.frequencyId
+          })),
+          Questions: Object.entries(data.homeDetails).map(([id, answer]) => ({
+            QuestionId: parseInt(id),
+            Answer: answer.toString()
+          }))
+        }
       };
     },
     handleInput: (input, data) => {
@@ -645,7 +695,12 @@ export const conversationFlow = {
       if (!data.availableDates) {
         return {
           message: "Checking available appointment times...",
-          inputType: null
+          inputType: null,
+          apiAction: API_ACTIONS.GET_AVAILABILITY,
+          apiParams: {
+            scopeGroupId: data.selectedService.id,
+            hours: data.pricingOptions[0].hours
+          }
         };
       }
       
@@ -703,10 +758,27 @@ export const conversationFlow = {
   
   // Booking confirmation state
   [STATES.BOOKING_CONFIRMATION]: {
-    enter: () => {
+    enter: (data) => {
       return {
         message: "Processing your booking...",
-        inputType: null
+        inputType: null,
+        apiAction: API_ACTIONS.BOOK_QUOTE,
+        apiParams: {
+          LeadId: data.leadId,
+          QuoteId: data.quoteId,
+          SendBookedEmail: true,
+          SendCustomerPortalInvite: true,
+          AddToCampaigns: true,
+          TriggerWebhook: true,
+          ScopeGroupId: data.selectedService.id,
+          ScopesOfWork: [
+            {
+              FirstJobDate: data.bookingDate,
+              ScopeOfWorkId: data.pricingOptions[0].scopeId,
+              Frequency: data.pricingOptions[0].frequencyId
+            }
+          ]
+        }
       };
     },
     handleInput: (input, data) => {
